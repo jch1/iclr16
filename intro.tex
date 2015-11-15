@@ -1,0 +1,71 @@
+
+
+Large strides have been made in computer vision in recent years 
+due to scalable deep learning and massive labeled datasets such as Imagenet~\cite{krizhevsky2012imagenet,deng2009imagenet}.
+But as we move beyond simple image classification problems to more complication output spaces, the limitations
+to our current approaches are becoming more transparent.
+Dense labeling problems such as semantic segmentation, instance segmentation, for example,
+require much more human effort per image to label and more images in general.
+
+
+
+
+We've seen less progress on unsupervised models  ---  using MCMC
+
+traditional graphical models from yesteryear (citations?) 	- methods tend to be less scalable often requiring intractable normalization constants to be computed
+  --- recent work has bypassed this (citations) allowing models to be trained via gradient methods
+
+
+Things don't just have one label
+
+We also are starting to get interested in dense labels of images and video: think semantic segmentations, instance level segmentations, depth, etc.
+	It's getting more and more expensive to collect this data.
+
+	
+Unsupervised and weakly supervised models are the next frontier.  
+
+The goal is to model the variation in real images.  
+Disentangling the factors of variation is critical to confronting the curse of dimensionality.
+
+conv nets for example learn higher levels of abstraction, disentangling variation in appearance
+
+there has been some work in the deep learning community factoring pose from appearance.
+
+No work on factoring out the variability stemming from Multiple objects.
+
+We propose a layered model of image generation.  And it has these benefits.
+
+
+\Jon{play up interpretability of the model}
+
+
+A critical issue in counting and instance level segmentation is dealing with things that can overlap and partially occlude each other, and current detection methods that use non-max suppression, for example, are not smart at reasoning about overlap/occlusion.  
+
+In the instance segmentation problem, for example, we might need to analyze a local patch and decide whether it belongs to instance A, or instance B, or whether there were even two instances that were overlapping to begin with.  In some of these settings, the decision cannot be made at the local level and requires a global understanding of the semantics of the scene.
+
+
+Motivations:
+	The idea that we explore here is: if we only knew what the instances A and B were supposed to look like (i.e., had pixel-level generative models of A and B), we would be better positioned to make this decision.
+
+	Being able to do this can help in a ton of applications: counting, instance segmentation
+		even training for object recognition ? a lot of examples are occluded and if knew how
+			how to factor out this variation, it could help
+			
+	But we can go further: we can imagine what?s behind (amodal completion)
+
+	A step toward integrating top-down and bottom-up
+	
+	part of the story is that we're able to use VAEs to now combine some of the prior structure that we know about 
+		with the rich expressiveness of deep models and train them all together with backprop
+
+We propose a generative model that separately generates a ?layer? for each object in the image
+in which each layer itself we?ve separated pose from style.
+\begin{itemize}
+\item fully unsupervised training (?) using ordinary sgd based methods that use backprop
+\item st-aevb model
+\item new ?alpha compositing? layer which is kind of like a pixelwise attention mechanism
+\item masked inference mechanism allowing for training from partially observed images
+\item usage of conv and deconv layers in a fully probabilistic generative model
+\item show how to reason with occlusions and do amodal completion of objects based on a generative model
+can handle multiple and unknown number of objects?
+\end{itemize}

@@ -1,0 +1,138 @@
+\usepackage[T1]{fontenc}
+\usepackage[latin1]{inputenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+%\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{graphicx}
+%\usepackage[boxed,noend]{algorithm2e}
+
+%\usepackage[algo2e,noend,linesnumbered,boxed]{algorithm2e}
+\usepackage[algo2e,noend,boxed]{algorithm2e}
+\usepackage{algorithmic}
+\usepackage{algorithm}
+
+\usepackage{xspace}
+\usepackage{dsfont}
+%\usepackage{fullpage}
+\usepackage{graphicx}  
+\usepackage{verbatim}
+\usepackage{appendix}
+\usepackage{multirow}
+\usepackage{color}
+\usepackage{framed}
+\usepackage{wrapfig}
+\newtheorem{thm}{Theorem}%[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{example}[thm]{Example}
+%\theoremstyle{definition}
+%\newtheorem{defn}[thm]{Definition}
+%\theoremstyle{remark}
+%\newtheorem{rem}[thm]{Remark}
+
+%\newcommand{\shadecolor}{white}
+\definecolor{shadecolor}{rgb}{.6,.6,.6}
+\newenvironment{highlight}[1][gray]%
+ {\vspace*{0.5\baselineskip}
+\begin{center}\begin{minipage}{0.85\textwidth}\begin{shaded}}%
+ {\end{shaded}\end{minipage}\end{center} \vspace*{0.5\baselineskip}}
+
+% enable subfigures
+\usepackage[tight,scriptsize]{subfigure}
+%\usepackage{subfloat}
+\newcommand{\denselist}{
+\itemsep -2pt\topsep-8pt\partopsep-8pt
+}
+\newcommand{\loud}[1]{\textcolor{green}{!!!! #1 !!!!}}
+
+\newcommand{\Jon}[1]{{\color{red}{\bf\sf [Jon: #1]}}}
+\newcommand{\Chris}[1]{{\color{magenta}{\bf\sf [Chris: #1]}}}
+\newcommand{\Carlos}[1]{{\color{blue}{\bf\sf [Carlos: #1]}}}
+\newcommand{\Leo}[1]{{\color{green}{\bf\sf [Leo: #1]}}}
+\newcommand{\Ashish}[1]{{\color{green}{\bf\sf [Ashish: #1]}}}
+
+\vfuzz2pt % Don't report over-full v-boxes if over-edge is small
+\hfuzz2pt % Don't report over-full h-boxes if over-edge is smallq
+\numberwithin{equation}{section}
+\newcommand{\abs}[1]{\lvert#1\rvert}
+\newcommand{\blankbox}[2]{%
+  \parbox{\columnwidth}{\centering
+    \setlength{\fboxsep}{0pt}%
+    \fbox{\raisebox{0pt}[#2]{\hspace{#1}}}%
+  }%
+}
+\newcommand{\blockcomment}[1]{ }
+
+\newcommand{\tr}{\mbox{Tr }}
+\newcommand{\bfi}{\bfseries\itshape}
+\def\reals{\mathbb{R}}
+\def\rationals{\mathbb{Q}}
+\def\borel{\mathbb{B}}
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\eqbase}{1/2}
+\newcommand{\eqalt}{\sqrt{3}/2}
+\newcommand{\im}{\mbox{im }}
+\def\naturals{\mathbb{N}}
+\def\expectation{\mathbb{E}}
+\def\normal{\mathcal{N}}
+\def\Tr{\mbox{Tr}}
+\def\triv{{\bf 1}}
+
+\newcommand{\drho}[1]{d_{\rho_{#1}}}
+\newcommand{\twovec}[2]{\left[
+\begin{array}{c}
+#1 \\
+#2 \\
+\end{array}\right]
+}
+\newcommand{\twomat}[4]{\left[
+\begin{array}{cc}
+#1 & #2 \\
+#3 & #4 \\
+\end{array}\right]
+}
+\newcommand{\threemat}[9]{\left[
+\begin{array}{ccc}
+#1 & #2 & #3 \\
+#4 & #5 & #6 \\
+#7 & #8 & #9 \\
+\end{array}
+\right]
+}
+\newcommand{\threematbl}[4]{\left[
+\begin{array}{cccc}
+1 & \vline & 0 & 0 \\
+\hline
+0 & \vline & #1 & #2 \\
+0 & \vline & #3 & #4 \\
+\end{array}
+\right]
+}
+\def\triv{{\bf 1}}
+\def\post{\widehat{L^{(t)}P^{(t)}}}
+\def\postbra{\left[\post\right]}
+\newcommand{\Conditioning}{{\sc KroneckerConditioning} \xspace}
+\newcommand{\PredictionRollup}{{\sc PredictionRollup} \xspace}
+\newcommand{\ComputeCG}{{\sc ClebschGordanCoeffs} \xspace}
+\newcommand{\ind}[1]{\mathds{1}\left\{#1\right\}}
+\newcommand{\algref}[1]{Algorithm~\ref{#1}}
+\newcommand{\invFourier}[3]{
+\hat{#1}_{\rho_{#3}}^T \cdot #2_{#3}(\sigma)
+}
+
+\newbox\subfigbox
+\makeatletter
+\newenvironment{subfloat}
+{\def\caption##1{\gdef\subcapsave{\relax##1}}%
+\let\subcapsave\@empty\setbox\subfigbox\hbox
+\bgroup}{\egroup\subfigure[\subcapsave]{\box\subfigbox}}
+\makeatother
+
+\newcommand\T{\rule{0pt}{3.7ex}} %top strut
+\newcommand\B{\rule[-3.1ex]{0pt}{0pt}} %bottom strut
+\newcommand\TT{\rule{0pt}{2.7ex}} %top strut
+\newcommand\BB{\rule[-1.8ex]{0pt}{0pt}} %bottom strut
+

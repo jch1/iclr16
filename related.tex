@@ -1,0 +1,45 @@
+
+%\cite{*}
+
+\subsection{Deep probabilistic generative models}
+
+VAE papers
+		importance weighted auto-encoders \cite{burda2015importance}
+		 VAE papers \cite{Kingma2014, kingma2014semi,rezende2014stochastic}
+		DRAW \cite{gregor2015draw}
+		Tejas Kulkarni?s paper \cite{kulkarni2015deep}
+		
+		Adversarial networks \cite{denton2015deep, goodfellow2014generative}
+		
+	These papers are deep (and sort of generative) but definitely not probabilistic
+	Texture generation \cite{gatys2015a, gatys2015b}
+	
+	\Jon{We specifically need to spend some time differentiating from the DRAW network
+	which is by far the most related to the final proposed model.  The biggest difference is the RNN
+	which assumes that layers (what they call glimpses) are dependent on past layers (both in the 
+	generative model as well as in the recognition model.
+	 Other differences: they use an attention model which seems to help a lot --- our spatial
+	 transformer part can also be interpreted as a kind of attention model (but it's not really the same).
+	 They also composite using a different (less interpretable) function.
+	}
+
+\subsection{Modeling Transformation in neural networks}
+
+	Spatial transformed  \cite{jaderberg2015spatial}: A fully differentiable module that allows one to warp/rotate images based on some spatial transformation.
+	
+	transformed autoencoder papers \cite{hinton2011transforming}
+	
+	Discovering Hidden Factors of Variation in Deep Networks \cite{cheung2014discovering},
+	Chair paper \cite{dosovitskiy2014learning}: The above two papers both separate style from pose (and other things like lighting) but use ordinary autoencoders which do not have the same probabilistic semantics.  They also train their models in a supervised setting and thus required labeled data for pose/lighting/etc
+
+
+\subsection{Layered models and amodal completion}
+
+
+	Amodal completion papers (yuandong and jitendra malik?s papers)
+		\cite{amodalKarTCM15}, \cite{categoryShapesKar15}, \cite{zhu2015semantic}
+	
+	more classical generative layer based models (that are not deep)
+	\cite{le2011learning}
+	\cite{yang2012layered}
+	\cite{kannan2005generative}

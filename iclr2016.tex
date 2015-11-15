@@ -1,0 +1,68 @@
+\documentclass{article} % For LaTeX2e
+\usepackage{iclr2016_conference,times}
+\usepackage{hyperref}
+\usepackage{url}
+
+\include{commands}
+
+\title{Interpretable deep layered models for generating images with occlusion}
+
+\author{Jonathan Huang \& Kevin Murphy \\
+Google Research \\
+1600 Amphitheatre Parkway \\
+Mountain View, CA 94043, USA\\
+\texttt{\{jonathanhuang, kpmurphy\}@google.com}
+}
+
+
+\newcommand{\fix}{\marginpar{FIX}}
+\newcommand{\new}{\marginpar{NEW}}
+
+%\iclrfinalcopy % Uncomment for camera-ready version
+
+\begin{document}
+
+
+\maketitle
+
+\begin{abstract}
+We present a generative model of images based on layering,
+in which image layers are individually generated, then alpha-composited
+from  front to back.  We are thus able to factor the appearance
+of an image into the appearance of individual objects within the image --- and additionally for
+each individual object, we can factor content from pose.  
+Unlike prior work on layered models, we learn a shape prior for each object/layer, allowing one to
+tease out which object is in front by looking for a consistent shape, without needing access to motion cues.
+We show that ordinary stochastic gradient variational bayes (SGVB), which optimizes our fully differentiable
+lower-bound on the log-likelihood is sufficient to learn an interpretable representation of images.
+Finally we present experiments demonstrating the effectiveness of the model for inferring foreground
+and background objects in images.
+\end{abstract}
+
+\section{Introduction}
+\input{intro.tex}
+
+\section{Related work}
+\input{related.tex}
+
+\section{Probabilistic models of image generation}
+\input{models.tex}
+
+\section{Evaluation}
+\input{evaluation.tex}
+
+\section{Conclusion}
+\input{conclusion.tex}
+
+%\section*{Appendix}
+%\input{appendix.tex}
+
+\subsubsection*{Acknowledgments}
+
+Acks.
+
+
+\bibliography{iclr2016_conference}
+\bibliographystyle{iclr2016_conference}
+
+\end{document}
