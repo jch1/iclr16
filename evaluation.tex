@@ -21,8 +21,7 @@ image.
 
 We first evaluate our ST-VAE model alone on the MNIST dataset~\citep{lecun1998gradient}
 and a derived dataset, \emph{TranslatedMNIST}, in which we randomly translated each  $28\times 28$ MNIST example
-within a $36\times 36$ black image.
-
+within a $36\times 36$ black image.  In both cases, we binarize the images by thresholding at value 128.
 
 
 
@@ -35,13 +34,73 @@ Ordinary and Translated MNIST comparing
 
 \begin{itemize}
 \item show pretty images
-\item show that even on ordinary MNIST, STAEVB model converges faster
 \item show that we often converge in first few iterations in pose and start to learn style after that
 \end{itemize}
 
 
 
 \Jon{Accuracy of classification of latent layer?}
+
+
+
+\begin{figure}[t]
+\begin{center}
+\subfigure[]{
+\raisebox{3mm}{
+\includegraphics[width=0.45\linewidth]{figs/vae_stvae_samples.pdf}
+\label{fig:vae_stvae_samples}
+}
+}
+\qquad
+\subfigure[]{
+\includegraphics[width=0.45\linewidth]{figs/stvae_averageddigits.pdf}
+\label{fig:stvae_averageddigits}
+}
+\end{center}
+ \caption{hello}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.30\linewidth]{figs/vae_stvae_learning_curves.pdf}
+\label{fig:vae_stvae_learning_curves}
+}
+\subfigure[]{
+\raisebox{12mm}{
+\footnotesize
+\begin{tabular}{lcc} 
+\hline 
+%\multicolumn{1}{r|}{Proposals} & \multicolumn{2}{c}{GT} & \multicolumn{2}{c}{multibox} \\
+%\multicolumn{1}{r|}{Descriptions} & GEN & GT & GEN & GT \\
+ & Train Accuracy & Test Accuracy \\
+\hline 
+\multicolumn{3}{l}{On translated (36x36) MNIST} \\
+\hline
+VAE + supervised & 0.771 & 0.146 \\
+ST-VAE + supervised & 0.972 & 0.964  \\
+directly supervised & 0.884 & 0.783 \\
+Directly supervised with STN & 0.993 & 0.969  \\
+\hline 
+\multicolumn{3}{l}{On original (28x28) MNIST} \\
+\hline 
+Directly supervised & 0.999 & 0.96   \\
+\hline
+\end{tabular}%
+}
+}
+\end{center}
+
+ \caption{hello}
+\end{figure}
+
+
+
+
+
+
+
+
 
 \subsection{Evaluating the CST Variational Autoencoder}
 
@@ -57,6 +116,20 @@ Dataset
 Explain encoder/decoder architectures for pose and style
 
 Show reconstruction results on MNIST and samples from a single STAEVB module within the network
+
+
+
+\begin{figure}[t]
+\begin{center}
+\subfigure[]{
+\includegraphics[width=0.3\linewidth]{figs/cstvae_reconstructions.pdf}
+\label{fig:cstvae_reconstructions}
+}
+\end{center}
+ \caption{hello}
+\end{figure}
+
+
 
 
 \subsection{Partially observed data}
