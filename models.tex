@@ -86,7 +86,8 @@ T_i &= f_T(z_i^T; \theta_T), \\
 L_i &= \mbox{STN}(C_i, T_i), \\
 x_i &= x_{i-1} \oplus L_i,
 \end{align*}
-setting the last $x_i$ as the observed image (i.e., $x\equiv x_N$).
+setting the last $x_i$ as the observed image (i.e., $x\equiv x_N$). \Jon{not quite right yet ---
+if images are binary, then we model $P(x| x_N)$ as a bernoulli.  If it's continuous, then $P(x|x_N)$ could be Gaussian.}
 See Figure~\ref{fig:compositestvae_gm} for
  a graphical model depiction of the CST-VAE generative model.
 
@@ -133,8 +134,14 @@ is called an encoder.
 
 In the following, we discuss how to do parameter learning and inference for the CST-VAE model
 within the variational auto-encoder framework more specifically.
-The critical design choice that must be made is how to parameterize $Q$, the recognition model so that it is able to 
-capture the important dependencies that may arise in the posterior.   
+The critical design choice that must be made is how to parameterize  the recognition model $Q$. There are two things 
+that we hope for in a recognition model: (1) it must be able to 
+capture the important dependencies that may arise in the posterior; (2) we should be able to differentiate the result of
+sampling $Q$ with respect to its parameters $\phi$.  The second desiderata is accomplished (as is standard in VAE models)
+by parameterizing $Q$ as a normal distribution (whose mean and variance are nonlinear functions of $\phi$), allowing us to differentiate using the 
+reparametrization trick.  
+
+
 
 %Unfortunately traditional approaches such as EM
 %$P(x;\theta) = \int P(x| z^T, z^C) P(z^T) P(z^C)$
@@ -174,7 +181,7 @@ capture the important dependencies that may arise in the posterior.
 
 
 
-\subsection{{\bf ST-VAE} Model: Spatially Transformed Variational Autoencoder}\label{sec:stvae}
+\subsection{{\bf ST-VAE} Spatially Transformed Variational Auto-encoder}\label{sec:stvae}
 
 
 \begin{figure}[t]
@@ -184,7 +191,7 @@ capture the important dependencies that may arise in the posterior.
 \label{fig:stvae_decoder}
 }\qquad\qquad
 \subfigure[]{
-\includegraphics[width=0.25\linewidth]{figs/stvae_rec.pdf}
+\includegraphics[width=0.3\linewidth]{figs/stvae_rec.pdf}
 \label{fig:stvae_encoder}
 }
 \end{center}
@@ -194,35 +201,38 @@ capture the important dependencies that may arise in the posterior.
 \end{figure}
 
 
-We focus first on how to parameterize the recognition network for the simpler case of a single layer model (i.e., the ST-VAE model
+We focus first on how to parameterize the recognition network (encoder) for the simpler case of a single layer model (i.e., the ST-VAE model
 shown in Figure~\ref{fig:stvae_decoder}), in which we need only predict a single set of latent variables $z^C$ and $z^T$.
 Na\"{i}vely, one could 
-simply use an ordinary MLP to parameterize a distribution $Q(z, \phi | x)$, but ideally we would take advantage of the same
+simply use an ordinary MLP to parameterize a distribution $Q(z^C, z^T | L)$, but ideally we would take advantage of the same
  insight that we used for the generative model: that it is advantageous to model content from images of objects in a canonical pose instead
- of conflating content with pose.  To this end, we propose the ST-VAE recognition model (see Figure~\ref{fig:stvae_encoder}). 
+ of conflating content with pose.  To this end, we propose the ST-VAE recognition model shown in Figure~\ref{fig:stvae_encoder}. 
 Conceptually the ST-VAE recognition model breaks the prediction of $z^C$ and $z^T$ into two stages.  Given the observed image $L$,
-we first predict the latent representation of the pose, $z^T$.  Then we use $T$ to ``undo'' the transformation of the generative process
-by using the Spatial Transformer Network again but this time using the inverse transformation of the predicted pose.  This result, which can be
+we first predict the latent representation of the pose, $z^T$.  Have this latent $z^T$ allows us to recover the pose transformation 
+$T$ itself, which we use to ``undo'' the transformation of the generative process
+by using the Spatial Transformer Network again but this time with the inverse transformation of the predicted pose.  This result, which can be
 thought of as a prediction of the image in a canonical pose is finally used to predict latent content parameters.
 
-More precisely, we assume that pose and content are independent in the variational posterior with
-$Q(z, \phi | x) = Q(\phi |x)\cdot Q(z |\hat{\phi}, x)$ where both factors are normal distributions.  
-To obtain a draw $(\hat{z}, \hat{\phi})$ from this posterior, we use the following procedure:
+More precisely, we assume that the joint posterior distribution over
+pose and content factors as
+$Q(z^C, z^T | L) = Q(z^T |L)\cdot Q(z^C | z^T, L)$ where both factors are normal distributions.  
+To obtain a draw $(\hat{z}^C, \hat{z}^T)$ from this posterior, we use the following procedure:
 
 \begin{align*}
-\hat{\phi} &\sim Q(\phi|x) = \mathcal{N}(\mu_\phi(x), \mbox{diag}(\sigma_\phi^2(x))), \\
-\hat{\theta} &= f_\phi(\hat{\phi}), \\
-\hat{x} &= \mbox{STM}(x^\theta, \theta^{-1}), \\
-\hat{z} &\sim \mathcal{N}(\mu_z(\hat{x}), \mbox{diag}(\sigma_z^2(\hat{x}))).
+\hat{z}^T &\sim Q(z^T |L; \phi) = \mathcal{N}(\mu_{enc,T}(L; \phi), \mbox{diag}(\sigma_{enc,T}^2(L; \phi))), \\
+\hat{T} &= f_T(\hat{z}^T), \\
+\hat{C} &= \mbox{STN}(L, \hat{T}^{-1}), \\
+\hat{z}^C &\sim Q(z^C | z^T, L; \phi) =  \mathcal{N}(\mu_{enc, C}(\hat{C}; \phi), \mbox{diag}(\sigma_{enc, C}^2(\hat{C}; \phi))).
 \end{align*}
+
+To train an ST-VAE model, we then use the above parameterization of $Q$ and maximize Equation~\ref{eqn:vae_objective} with minibatch
+SGD.
+As long as the pose and content encoders and decoders  are differentiable, Equation~\ref{eqn:vae_objective} is guaranteed to also be 
+end-to-end differentiable.
 
 %To train a model, we
 %optimize a similar lower bound as in Equation~\ref{eqn:vae_objective} with respect to parameters of the pose and content encoders/decoders:
 %As with the VAE, the ST-VAE objective is fully differentiable end-to-end.
-
-For binary images, it is common to have a sigmoid at the end of the VAE decoder.
-However we have found that it is often more numerically stable in these situations to first apple the spatial transformation, then
-to apply the sigmoid after the transformation.
 
 
 
@@ -267,7 +277,7 @@ to apply the sigmoid after the transformation.
  
 
 
-\subsection{{\bf CST-VAE} Model: Composited Spatially Transformed Variational Autoencoder}\label{sec:cstvae}
+\subsection{{\bf CST-VAE} Model: Composited Spatially Transformed Variational Auto-encoder}\label{sec:cstvae}
 
 
 \begin{figure}[t]
@@ -280,45 +290,45 @@ The CST-VAE network ``unrolled'' for two image layers.
 \label{fig:cstvae}
 \end{figure}
 
-Intuitively the ST-VAE model should work well in factoring pose from content for images of single objects.
-However images generally contain multiple objects of different types with different poses --- we now present
-the Composited Spatially Transformed Variational Auto-encoder  (CST-VAE) model, which is able to factor
-the appearance of an image into the appearance of the different layers
-that create an image.  
+%Intuitively the ST-VAE model should work well in factoring pose from content for images of single objects.
+%However images generally contain multiple objects of different types with different poses --- we now present
+%the Composited Spatially Transformed Variational Auto-encoder  (CST-VAE) model, which is able to factor
+%the appearance of an image into the appearance of the different layers
+%that create an image.  
 %The CST-VAE model thus makes it possible to combine generative models for images
 %of single objects to obtain a generative model of  images of multiple objects.  
-Among other things, the CST-VAE model allows us to tease
-apart the component layers (or objects) that make up an image and reason about occlusion.
-Furthermore, as we show in experiments, it can be trained in a fully unsupervised fashion using ordinary stochastic
-gradient descent methods.  %However we can also add labels or use semi supervised methods a la asdfasdf
+%Among other things, the CST-VAE model allows us to tease
+%apart the component layers (or objects) that make up an image and reason about occlusion.
+%Furthermore, as we show in experiments, it can be trained in a fully unsupervised fashion using ordinary stochastic
+%gradient descent methods.  %However we can also add labels or use semi supervised methods a la asdfasdf
 
-In the CST-VAE model, we  assume that images are generated by first independently generating a sequence of layers 
- via the ST-VAE model, then compositing layers from front to back to form a final observed image.  See Figure~\ref{fig:compositestvae_gm} for
- a graphical model depiction of the CST-VAE generative model and Figure~\ref{fig:cartoon}
- for a simplified cartoon illustration of the same process.  We assume that each layer is generated using the same ST-VAE model
- (i.e. parameters are shared across image layers). To composite these layers,  we use  the
-classic \emph{over operator} from computer graphics~\citep{porter1984compositing}.
-In the two-layer setting
-with only foreground and background layers, this over operator reduces to a simple $\alpha$-weighted
-convex combination of foreground and background pixels, but it extends in a natural (and differentiable)
-way to handle multiple layers. % associativity of the over operator
+%In the CST-VAE model, we  assume that images are generated by first independently generating a sequence of layers 
+% via the ST-VAE model, then compositing layers from front to back to form a final observed image.  See Figure~\ref{fig:compositestvae_gm} for
+% a graphical model depiction of the CST-VAE generative model and Figure~\ref{fig:cartoon}
+% for a simplified cartoon illustration of the same process.  We assume that each layer is generated using the same ST-VAE model
+% (i.e. parameters are shared across image layers). To composite these layers,  we use  the
+%classic \emph{over operator} from computer graphics~\citep{porter1984compositing}.
+%In the two-layer setting
+%with only foreground and background layers, this over operator reduces to a simple $\alpha$-weighted
+%convex combination of foreground and background pixels, but it extends in a natural (and differentiable)
+%way to handle multiple layers. % associativity of the over operator
 
-
-As with the ST-VAE model, a critical design choice is how to parameterize the recognition model (encoder) --- in particular we would like to 
+We now turn back to the multi-layer CST-VAE model, where again the task is to parameterize the recognition model $Q$. 
+In particular we would like to 
 avoid learning a model that must make a ``straight-shot'' joint prediction of all objects and their poses in an image.
 Instead our approach is to perform inference over a single layer at a time from front to back, each time removing the contribution of a layer
 from consideration until the last layer has been explained.
-More specifically, to perform inference for a single layer $i$, we use the ST-VAE module to generate a sample of the layer $L_i$.
-We then compute $\mbox{ReLU}(x-L_i)$. \Jon{fix notation here! and write out the ReLU function} which can be interpreted as the residual image --- the part of the image that is yet to be explained
-by some layer.
-Assuming that observed and predicted pixel values are between 0 and 1, $x-L_i$ can be negative, which breaks interpretability of the layers --- the
-ReLU transfer function serves to ensure that the residual image can always itself be interpreted as an image.
-Figure~\ref{fig:cstvae} unrolls the entire network for two layers.
 
-% Can we easily interpret what we're doing as a legitimate recognition model?
 
-Write out objective function.
+We proceed recursively: to perform inference for  layer $L_i$, we assume that the latent parameters $z^C_i$ and $z^T_i$ are responsible for explaining
+some part of the residual image $\Delta_i$ --- i.e. the part of image that has not been explained by layers $L_1, \dots, L_{i-1}$ (note that $\Delta_1=x$).
+We then use the ST-VAE module (both the decoder and encoder modules) 
+to generate a reconstruction of the layer $L_i$ given $\Delta_i$.  Finally to compute the residual image to be explained by future layers, we set
+$\Delta_{i+1} = \max (0, \Delta_i - L_i)$.  Assuming that observed and predicted pixel values are between 0 and 1, $\Delta_i-L_i$ can be negative, which breaks interpretability of the layers --- the ReLU transfer function, $ReLU(\cdot)=\max(0, \cdot)$, serves to ensure that the residual image can always itself be interpreted as an image.
 
+Note that our encoder for layer $L_i$ requires that the decoder has been run for layer $L_{i-1}$.  Thus it's not possible to separate the generative
+and recognition models into disjoint parts as in the ST-VAE model.  Figure~\ref{fig:cstvae} unrolls the entire CST-VAE network (combining
+both generative and recognition models) for two layers.
 
 
 

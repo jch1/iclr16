@@ -17,6 +17,12 @@ In practice, we have found this choice of Tanh vs. ReLU makes a significant diff
 Finally for spatial transformer modules, we always resample onto a grid that is the same size as the original
 image.
 
+
+\Jon{For binary images, it is common to have a sigmoid at the end of the VAE decoder.
+However we have found that it is often more numerically stable in these situations to first apple the spatial transformation, then
+to apply the sigmoid after the transformation.
+}
+
 \subsection{Evaluating the Spatially transformed Variational Autoencoder alone}
 
 We first evaluate our ST-VAE model alone on the MNIST dataset~\citep{lecun1998gradient}
