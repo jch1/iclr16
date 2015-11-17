@@ -68,8 +68,10 @@ Layer based models have been used in a number of works in computer vision  --- t
 taking advantage of motion cues to decompose video data into layers~\cite{wang1994representing,ayer1995layered,kannan2005generative}.
 However there have been works that apply layer based reasoning on images.
 \cite{yang2012layered}, for example, propose a layered model for segmentation but rely heavily on bounding box and categorical annotations.	
-Our model also has similarities to that of \cite{le2011learning}, however instead of using restricted Boltzmann machines, our model
-falls under the category of variational autoencoders which do not require expensive MCMC sampling.	
+Our model also has similarities to that of \cite{le2011learning}, however  they use restricted Boltzmann machines, 
+which require expensive MCMC sampling to estimate gradients and have difficulties reliably estimating the 
+log-partition function.  %ur model
+%falls under the category of variational autoencoders which do not require expensive MCMC sampling.	
 	
 %Amodal completion, where one must ``complete'' a partially visible object, is a challenging vision task
 %that several papers have recently attempted.
