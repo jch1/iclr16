@@ -3,37 +3,69 @@
 
 \subsection{Deep probabilistic generative models}
 
-VAE papers
-		importance weighted auto-encoders \cite{burda2015importance}
-		 VAE papers \cite{Kingma2014, kingma2014semi,rezende2014stochastic}
-		DRAW \cite{gregor2015draw}
-		Tejas Kulkarni?s paper \cite{kulkarni2015deep}
+Our approach is inspired by the recent introduction of generative deep learning models that can be
+trained end-to-end using backpropagation.  These models have included
+generative adversarial networks \citep{denton2015deep, goodfellow2014generative}
+as well as variational auto-encoder (VAE) models \citep{Kingma2014,kingma2014semi,rezende2014stochastic,burda2015importance}
+which are most relevant to our setting.  
+
+Among the variational auto-encoder works, our work is most comparable to 
+the DRAW network of~\cite{gregor2015draw}.  As with our proposed model, 
+the DRAW network is generative model of images in the variational auto-encoder framework
+that decomposes image formation into multiple stages of additions to a canvas matrix.  
+Where their paper assumes a generic LSTM based generative model of these sequential 
+drawing actions, however, we enforce a prior that allows our stages to have an intuitive interpretation
+as layers (that one might use in typical photo editing software).
+
+
+%VAE papers
+%		importance weighted auto-encoders \cite{burda2015importance}
+%		 VAE papers \cite{Kingma2014, kingma2014semi,rezende2014stochastic}
+%		DRAW \cite{gregor2015draw}
+%		Tejas Kulkarni?s paper \cite{kulkarni2015deep}	
+%		Adversarial networks \cite{denton2015deep, goodfellow2014generative}
 		
-		Adversarial networks \cite{denton2015deep, goodfellow2014generative}
-		
-	These papers are deep (and sort of generative) but definitely not probabilistic
-	Texture generation \cite{gatys2015a, gatys2015b}
+%These papers are deep (and sort of generative) but definitely not probabilistic
+%Texture generation \cite{gatys2015a, gatys2015b}
 	
-	\Jon{We specifically need to spend some time differentiating from the DRAW network
-	which is by far the most related to the final proposed model.  The biggest difference is the RNN
-	which assumes that layers (what they call glimpses) are dependent on past layers (both in the 
-	generative model as well as in the recognition model.
-	 Other differences: they use an attention model which seems to help a lot --- our spatial
-	 transformer part can also be interpreted as a kind of attention model (but it's not really the same).
-	 They also composite using a different (less interpretable) function.
-	}
+%\Jon{We specifically need to spend some time differentiating from the DRAW network
+%	which is by far the most related to the final proposed model.  The biggest difference is the RNN
+%	which assumes that layers (what they call glimpses) are dependent on past layers (both in the 
+%	generative model as well as in the recognition model.
+%	 Other differences: they use an attention model which seems to help a lot --- our spatial
+%	 transformer part can also be interpreted as a kind of attention model (but it's not really the same).
+%	 They also composite using a different (less interpretable) function.
+%	}
 
 \subsection{Modeling Transformation in neural networks}
+One of our major contributions is a model that is capable of separating the pose of an object from its appearance,
+which is of course a classic problem in computer vision \Jon{is there a really ancient paper that we can cite here? The older the better }. 
+Here we highlight several of the most related works from 
+the deep learning community.  
+Many of these work related works have been influenced by \cite{hinton2011transforming} on Transformed Auto-encoder models
+where (as in our own work), pose is explicitly separated from content and an autoencoder is trained to predict small transformations of an image \Jon{fix this description}.	
+More recently,  \cite{dosovitskiy2014learning} introduced a convolutional network to generate images of chairs where pose was explicitly separated out, and
+\cite{cheung2014discovering} introduced an auto-encoder where a subset of variables such as pose can be explicitly observed and remaining
+variables are encouraged to explain orthogonal factors of variation.   
+In all of these works, there is an element of supervised learning, which our method does not require. 
 
-	Spatial transformed  \cite{jaderberg2015spatial}: A fully differentiable module that allows one to warp/rotate images based on some spatial transformation.
-	
-	transformed autoencoder papers \cite{hinton2011transforming}
-	
-	Discovering Hidden Factors of Variation in Deep Networks \cite{cheung2014discovering},
-	Chair paper \cite{dosovitskiy2014learning}: The above two papers both separate style from pose (and other things like lighting) but use ordinary autoencoders which do not have the same probabilistic semantics.  They also train their models in a supervised setting and thus required labeled data for pose/lighting/etc
+Most relevant in this line of works is that of~\cite{kulkarni2015deep}, which, like us, 
+separate the content of an image from pose parameters using variational auto-encoder.
+To achieve this separation, however, they rely on a custom training procedure 
+\Jon{where minibatches only allow one type of variable to vary}.
+Our method in contrast is able to separate pose from content in an fully unsupervised setting 
+using standard off-the-shelf minibatch gradient methods.
 
+Finally our method relies crucially on the recently introduced Spatial Transformer Networks paper ~\citep{jaderberg2015spatial}, which introduced 
+a fully differentiable module that allows one to warp/rotate images based on some input spatial transformation.
+To our knowledge, we are the first to apply this module in an unsupervised learning setting.  
+
+%	Discovering Hidden Factors of Variation in Deep Networks \cite{cheung2014discovering},
+%	Chair paper \cite{dosovitskiy2014learning}: The above two papers both separate style from pose (and other things like lighting) but use ordinary autoencoders which do not have the same probabilistic semantics.  They also train their models in a supervised setting and thus required labeled data for pose/lighting/etc
 
 \subsection{Layered models and amodal completion}
+
+
 
 
 	Amodal completion papers (yuandong and jitendra malik?s papers)
@@ -43,3 +75,18 @@ VAE papers
 	\cite{le2011learning}
 	\cite{yang2012layered}
 	\cite{kannan2005generative}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
