@@ -64,25 +64,32 @@ To our knowledge, we are the first to apply this module in an unsupervised learn
 %	Chair paper \cite{dosovitskiy2014learning}: The above two papers both separate style from pose (and other things like lighting) but use ordinary autoencoders which do not have the same probabilistic semantics.  They also train their models in a supervised setting and thus required labeled data for pose/lighting/etc
 
 \subsection{Layered models and amodal completion}
+Layer based models have been used in a number of works in computer vision  --- traditionally
+taking advantage of motion cues to decompose video data into layers~\cite{wang1994representing,ayer1995layered,kannan2005generative}.
+However there have been works that apply layer based reasoning on images.
+\cite{yang2012layered}, for example, propose a layered model for segmentation but rely heavily on bounding box and categorical annotations.	
+Our model also has similarities to that of \cite{le2011learning}, however instead of using restricted Boltzmann machines, our model
+falls under the category of variational autoencoders which do not require expensive MCMC sampling.	
+	
+%Amodal completion, where one must ``complete'' a partially visible object, is a challenging vision task
+%that several papers have recently attempted.
+% has recently been a
+%Though we do not attempt the amodal completion task on a large scale vision dataset,
+%we believe that generative models such as the one we propose could potentially be very useful in this task.
+%\cite{amodalKarTCM15}, \cite{categoryShapesKar15}, \cite{zhu2015semantic}
+	
+	
 
 
-
-
-	Amodal completion papers (yuandong and jitendra malik?s papers)
-		\cite{amodalKarTCM15}, \cite{categoryShapesKar15}, \cite{zhu2015semantic}
-	
-	more classical generative layer based models (that are not deep)
-	\cite{le2011learning}
-	\cite{yang2012layered}
-	\cite{kannan2005generative}
+% all use motion cues to decompose a video into layers
+%	The kannan model (at least the graphical model part) looks a lot like ours except they 
+%		treat videos and rely on motion cues.  They don't assume that appearance is encoded from some latent vector ---
+%		rather they treat appearance as a pixel matrix which can be warped by motion throughout the video	
+%	They use EM with variational inference
 	
 	
 	
-	
-	
-	
-	
-	
+		
 	
 	
 	
