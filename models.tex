@@ -118,6 +118,9 @@ jointly with respect to generative model parameters $\theta$ and recognition mod
 \end{equation}
 %\expectation_{Q(z_\ell^C, z_\ell^T | x^{(i)};\phi)} 
 where $z^C_\ell, z^T_\ell \sim Q(z^C, z^T | x^{(i)};\phi) $ are samples drawn from the variational posterior $Q$.
+\kevin{use $s$ as an index for samples, since $\ell$ is for
+  layers. Comment that all layers are deterministic except for z and
+  the final x.}
 
 Equation~\ref{eqn:vae_objective} is stochastic lower bound on the observed data log-likelihood and interestingly,
 is differentiable with respect to parameters $\theta$ and $\phi$ in certain situations. In particular,
@@ -213,6 +216,7 @@ $T$ itself, which we use to ``undo'' the transformation of the generative proces
 by using the Spatial Transformer Network again but this time with the inverse transformation of the predicted pose.  This result, which can be
 thought of as a prediction of the image in a canonical pose is finally used to predict latent content parameters.
 
+
 More precisely, we assume that the joint posterior distribution over
 pose and content factors as
 $Q(z^C, z^T | L) = Q(z^T |L)\cdot Q(z^C | z^T, L)$ where both factors are normal distributions.  
@@ -224,6 +228,9 @@ To obtain a draw $(\hat{z}^C, \hat{z}^T)$ from this posterior, we use the follow
 \hat{C} &= \mbox{STN}(L, \hat{T}^{-1}), \\
 \hat{z}^C &\sim Q(z^C | z^T, L; \phi) =  \mathcal{N}(\mu_{enc, C}(\hat{C}; \phi), \mbox{diag}(\sigma_{enc, C}^2(\hat{C}; \phi))).
 \end{align*}
+
+\kevin{Just write $\mu_{T}()$ instead of $\mu_{enc,T}$. Maybe we need a
+  table summarizing notation?}
 
 To train an ST-VAE model, we then use the above parameterization of $Q$ and maximize Equation~\ref{eqn:vae_objective} with minibatch
 SGD.

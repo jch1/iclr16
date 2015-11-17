@@ -13,7 +13,11 @@ by using a two layer fully connected MLP with 256 dimensional
 hidden layers and ReLU nonlinearities.
 For pose decoders and encoders we also use two layer fully connected MLPs, but 
 using 32 dimensional hidden layers and Tanh nonlinearities.\footnote{
-In practice, we have found this choice of Tanh vs. ReLU makes a significant difference in practice}
+%
+We have found this choice of Tanh vs. ReLU makes a significant
+difference in practice.
+\kevin{Why?}
+}
 Finally for spatial transformer modules, we always resample onto a grid that is the same size as the original
 image.
 
