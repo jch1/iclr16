@@ -134,6 +134,41 @@ pose variation do much worse than ST-VAE on this task and exhibit significant ov
 
 \subsection{Evaluating the CST Variational Autoencoder}
 
+
+
+
+\begin{figure}[t]
+\begin{center}
+\subfigure[]{
+\raisebox{7mm}{
+\includegraphics[width=0.35\linewidth]{figs/cstvae_learning_curves.pdf}
+\label{fig:cstvae_learning_curves}
+}
+}\;
+\subfigure[]{
+\raisebox{5mm}{
+\includegraphics[width=0.2\linewidth]{figs/cstvae_classification.pdf}
+\label{fig:cstvae_classification}
+}
+}\;
+\subfigure[]{
+\includegraphics[width=0.35\linewidth]{figs/cstvae_reconstructions.pdf}
+\label{fig:cstvae_reconstructions}
+}\vspace{-4mm}
+\end{center}
+ \caption{\footnotesize
+ \subref{fig:cstvae_learning_curves} Train and test (per-example) lower bounds on log-likelihood 
+for the vanilla VAE and CST-VAE models on the Superimposed MNIST data;
+  \subref{fig:cstvae_classification}
+ Classification accuracy obtained by supervised training using latent encodings
+ from VAE and CST-VAE models on the Supervised MNIST dataset.  More details in text.
+ \subref{fig:cstvae_reconstructions}  Images from the Superimposed MNIST dataset with visualizations of
+ intermediate variables in the neural network corresponding to first and second layers and the final reconstruction;
+ }
+\end{figure}
+
+
+
 %Dataset
 %\begin{itemize}
 %\item MNIST superimposed
@@ -180,40 +215,6 @@ be correct on both digits within an image.
 
 
 %Show reconstruction results on MNIST and samples from a single STAEVB module within the network
-
-
-
-\begin{figure}[t]
-\begin{center}
-\subfigure[]{
-\raisebox{7mm}{
-\includegraphics[width=0.35\linewidth]{figs/cstvae_learning_curves.pdf}
-\label{fig:cstvae_learning_curves}
-}
-}\;
-\subfigure[]{
-\raisebox{5mm}{
-\includegraphics[width=0.2\linewidth]{figs/cstvae_classification.pdf}
-\label{fig:cstvae_classification}
-}
-}\;
-\subfigure[]{
-\includegraphics[width=0.35\linewidth]{figs/cstvae_reconstructions.pdf}
-\label{fig:cstvae_reconstructions}
-}\vspace{-4mm}
-\end{center}
- \caption{\footnotesize
- \subref{fig:cstvae_learning_curves} Train and test (per-example) lower bounds on log-likelihood 
-for the vanilla VAE and CST-VAE models on the Superimposed MNIST data;
-  \subref{fig:cstvae_classification}
- Classification accuracy obtained by supervised training using latent encodings
- from VAE and CST-VAE models on the Supervised MNIST dataset.  More details in text.
- \subref{fig:cstvae_reconstructions}  Images from the Superimposed MNIST dataset with visualizations of
- intermediate variables in the neural network corresponding to first and second layers and the final reconstruction;
- }
-\end{figure}
-
-
 
 
 %\subsection{Partially observed data}
