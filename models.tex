@@ -27,7 +27,7 @@
 \label{fig:compositestvae_gm}
 }\vspace{-3mm}
 \end{center}
- \caption{ \subref{fig:cartoon} Simplified cartoon illustration of the CST-VAE layer compositing process; 
+ \caption{\footnotesize \subref{fig:cartoon} Simplified cartoon illustration of the CST-VAE layer compositing process; 
  \subref{fig:compositestvae_gm} CST-VAE graphical model.  
 %The boxed  portion of the graph (plate notation) is duplicated $N$ times. 
 \Jon{fix notation here and label the cartoon with variables}.
@@ -198,9 +198,11 @@ reparametrization trick.
 \subfigure[]{
 \includegraphics[width=0.3\linewidth]{figs/stvae_rec.pdf}
 \label{fig:stvae_encoder}
-}
+}\vspace{-4mm}
 \end{center}
- \caption{\subref{fig:stvae_decoder} ST-VAE Generative model, $P(x^\theta | z,\phi)$ (Decoder); \subref{fig:stvae_encoder} ST-VAE Recognition model $Q(z,\phi |x^\theta) = Q(z | \phi,x^\theta)\cdot Q(\phi|x^\theta)$ (Encoder)  }
+ \caption{\footnotesize
+ \subref{fig:stvae_decoder} ST-VAE Generative model, $P(x^\theta | z,\phi)$ (Decoder); \subref{fig:stvae_encoder} ST-VAE Recognition model $Q(z,\phi |x^\theta) = Q(z | \phi,x^\theta)\cdot Q(\phi|x^\theta)$ (Encoder)   \Jon{fix notation}
+ }
  
 \label{fig:stvaemodel}
 \end{figure}
@@ -291,9 +293,9 @@ end-to-end differentiable.
 
 \begin{figure}[t]
 \begin{center}
-\includegraphics[width=0.65\linewidth]{figs/cstvae_diagram.pdf}
+\includegraphics[width=0.65\linewidth]{figs/cstvae_diagram.pdf}\vspace{-3mm}
 \end{center}
- \caption{
+ \caption{\footnotesize
 The CST-VAE network ``unrolled'' for two image layers.
  }
 \label{fig:cstvae}
@@ -338,7 +340,7 @@ $\Delta_{i+1} = \max (0, \Delta_i - L_i)$.  Assuming that observed and predicted
 Note that our encoder for layer $L_i$ requires that the decoder has been run for layer $L_{i-1}$.  Thus it's not possible to separate the generative
 and recognition models into disjoint parts as in the ST-VAE model.  Figure~\ref{fig:cstvae} unrolls the entire CST-VAE network (combining
 both generative and recognition models) for two layers.
-
+\Jon{mention parameter sharing, regularization}
 
 
 
