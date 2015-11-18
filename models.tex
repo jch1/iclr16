@@ -101,8 +101,8 @@ See Figure~\ref{fig:compositestvae_gm} for
 In the context of the CST-VAE model, we are  interested in two coupled problems:
 ``explaining'' an observed image $x$ by inferring all of the latent variables $z^C_i$ and $z^T_i$ given the model parameters $\theta$  (\textbf{inference}), and 
  estimating the model parameters $\theta=\{\theta_C,\theta_T\}$ given a training set of images $\{x^{(i)}\}_{i=1}^m$ (\textbf{learning}).  
-Traditionally for  latent variable models such as CST-VAE,  one might solve these problems using EM 
-with approximate inference (e.g., loopy belief propagation, MCMC or mean-field) \Jon{citations}. 
+Traditionally for  latent variable models such as CST-VAE,  one might solve these problems using EM~\citep{dempster1977maximum}
+with approximate inference (e.g., loopy belief propagation, MCMC or mean-field) ~\citep{wainwright2008graphical}. 
 However if we want to allow for rich expressive parameterizations of the generative models $f_C$ and $f_T$, the integrals required
 for these approximate inference approaches become intractable.  Instead we use the recently proposed 
 variational auto-encoder (\emph{VAE}) framework~\citep{Kingma2014} for inference and learning.
@@ -116,13 +116,13 @@ Specifically we optimize the following expression
 jointly with respect to generative model parameters $\theta$ and recognition model parameters $\phi$:
 \begin{equation}\label{eqn:vae_objective}\footnotesize
 \mathcal{L}(\theta, \phi; \{x^{(i)}\}_{i=1}^m)
-	= \sum_{i=1}^m \frac{1}{L}\sum_{\ell=1}^L \left[-\log Q(z^C, z^T | x^{(i)};\phi) + \log P(x^{(i)} | z^C, z^T; \theta) \right],
+	= \sum_{i=1}^m \frac{1}{S}\sum_{s=1}^S \left[-\log Q(z_{i,s}^C, z_{i,s}^T | x^{(i)};\phi) + \log P(x^{(i)} | z_{i,s}^C, z_{i,s}^T; \theta) \right],
 \end{equation}
 %\expectation_{Q(z_\ell^C, z_\ell^T | x^{(i)};\phi)} 
-where $z^C_\ell, z^T_\ell \sim Q(z^C, z^T | x^{(i)};\phi) $ are samples drawn from the variational posterior $Q$.
-\kevin{use $s$ as an index for samples, since $\ell$ is for
-  layers. Comment that all layers are deterministic except for z and
-  the final x.}
+where $z_{i,s}^C, z_{i,s}^T \sim Q(z^C, z^T | x^{(i)};\phi) $ are samples drawn from the variational posterior $Q$.
+%\kevin{use $s$ as an index for samples, since $\ell$ is for
+%  layers. Comment that all layers are deterministic except for z and
+ % the final x.}
 
 Equation~\ref{eqn:vae_objective} is stochastic lower bound on the observed data log-likelihood and interestingly,
 is differentiable with respect to parameters $\theta$ and $\phi$ in certain situations. In particular,
@@ -201,9 +201,8 @@ reparametrization trick.
 }\vspace{-4mm}
 \end{center}
  \caption{\footnotesize
- \subref{fig:stvae_decoder} ST-VAE Generative model, $P(x^\theta | z,\phi)$ (Decoder); \subref{fig:stvae_encoder} ST-VAE Recognition model $Q(z,\phi |x^\theta) = Q(z | \phi,x^\theta)\cdot Q(\phi|x^\theta)$ (Encoder)   \Jon{fix notation}
- }
- 
+ \subref{fig:stvae_decoder} ST-VAE Generative model, $P(L | z^C, z^T)$ (Decoder); \subref{fig:stvae_encoder} ST-VAE Recognition model $Q(z^C,z^T | L) = Q(z^C | z^T, L)\cdot Q(z^T | L)$ (Encoder)   
+  }\vspace{-5mm}
 \label{fig:stvaemodel}
 \end{figure}
 
@@ -227,14 +226,14 @@ $Q(z^C, z^T | L) = Q(z^T |L)\cdot Q(z^C | z^T, L)$ where both factors are normal
 To obtain a draw $(\hat{z}^C, \hat{z}^T)$ from this posterior, we use the following procedure:
 
 \begin{align*}
-\hat{z}^T &\sim Q(z^T |L; \phi) = \mathcal{N}(\mu_{enc,T}(L; \phi), \mbox{diag}(\sigma_{enc,T}^2(L; \phi))), \\
+\hat{z}^T &\sim Q(z^T |L; \phi) = \mathcal{N}(\mu_{T}(L; \phi), \mbox{diag}(\sigma_{T}^2(L; \phi))), \\
 \hat{T} &= f_T(\hat{z}^T), \\
 \hat{C} &= \mbox{STN}(L, \hat{T}^{-1}), \\
-\hat{z}^C &\sim Q(z^C | z^T, L; \phi) =  \mathcal{N}(\mu_{enc, C}(\hat{C}; \phi), \mbox{diag}(\sigma_{enc, C}^2(\hat{C}; \phi))).
+\hat{z}^C &\sim Q(z^C | z^T, L; \phi) =  \mathcal{N}(\mu_{C}(\hat{C}; \phi), \mbox{diag}(\sigma_{C}^2(\hat{C}; \phi))).
 \end{align*}
 
-\kevin{Just write $\mu_{T}()$ instead of $\mu_{enc,T}$. Maybe we need a
-  table summarizing notation?}
+%\kevin{Just write $\mu_{T}()$ instead of $\mu_{enc,T}$. Maybe we need a
+%  table summarizing notation?}
 
 To train an ST-VAE model, we then use the above parameterization of $Q$ and maximize Equation~\ref{eqn:vae_objective} with minibatch
 SGD.
