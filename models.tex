@@ -1,5 +1,4 @@
-\label{sec:models}
-
+\label{sec:models}\vspace{-3mm}
 
 
 
@@ -23,7 +22,7 @@
 }\qquad\qquad\qquad
 \subfigure[]{
 %\includegraphics[width=0.2\linewidth]{figs/compositestvae_graphicalmodel.pdf}
-\includegraphics[width=0.375\linewidth]{figs/cstVae2.pdf}
+\includegraphics[width=0.35\linewidth]{figs/cstVae2.pdf}
 \label{fig:compositestvae_gm}
 }\vspace{-3mm}
 \end{center}
@@ -49,6 +48,7 @@ gradient descent methods but can also make use of labels in supervised or semi-s
  In the CST-VAE model, we assume that images are created by (1) generating a sequence of image layers 
  then (2) compositing the layers to form a final result $x$.  Figure~\ref{fig:cartoon} shows a simplified cartoon illustration of this process.  
  We now discuss these two steps individually.
+ \vspace{-1mm}
  \paragraph{Layer generation.}
  The layer generation model is interesting in its own right and we will call it the ST-VAE model (since there is no compositing step).
  We intuitively think of  layers as corresponding to objects in a scene --- a layer $L$ is assumed 
@@ -67,8 +67,7 @@ use \emph{Spatial Transformer Network} (STN) modules, recently introduced by~\ci
 We will denote  the result of resampling an image $C$ onto a regular grid which has been transformed by $T$ by $STN(C, T)$.
 The benefit of using STN modules in our setting 
 is that they perform resampling in a differentiable way, allowing for our models to be trained using gradient methods.
-
-
+ \vspace{-1mm}
 \paragraph{Compositing.}
 To form the final observed image of the CST-VAE model, we generate a sequence of layers $L_1$, $L_2$, \dots, $L_N$
 independently drawn from the ST-VAE model and composite from front to back.
@@ -80,7 +79,7 @@ to handle multiple layers. % associativity of the over operator
 
  
 
-To summarize, the CST-VAE model can be written as the following generative process.  Let $x_0=\mathbf{0}^{w\times h}$ (i.e., a black image).   For $i=1,\dots,N$:
+To summarize, the CST-VAE model can be written as the following generative process.  Let $x_0=\mathbf{0}^{w\times h}$ (i.e., a black image).   For $i=1,\dots,N$:\vspace{-2mm}
 \begin{align*}
 z_i^C, z_i^T  &\sim \mathcal{N}(0, I), \\
 C_i &= f_C(z_i^C; \theta_C), \\
@@ -109,7 +108,7 @@ variational auto-encoder (\emph{VAE}) framework~\citep{Kingma2014} for inference
 
 In the variational auto-encoder setting, we assume that the posterior distribution over latents is parameterized by a particular form
  $Q(z^C, z^T|x;\phi)$ and the goal is to find a setting of
-the parameter $\phi$ to make $Q$ (which is called a \emph{recognition model}) a good approximation to the posterior.  
+the parameter $\phi$ to make $Q$ (called a \emph{recognition model}) a good approximation to the posterior.  
 In contrast to typical mean-field approximations for latent variable models,
 we learn a single setting for $\phi$ rather than optimizing variational parameters for each example. 
 Specifically we optimize the following expression
@@ -186,9 +185,7 @@ reparametrization trick.
 
 
 
-\subsection{{\bf ST-VAE} Spatially Transformed Variational Auto-encoder}\label{sec:stvae}
-
-
+\subsection{{\bf ST-VAE} Spatially Transformed Variational Auto-encoder}\label{sec:stvae}\vspace{-3mm}
 \begin{figure}[t]
 \begin{center}
 \subfigure[]{
@@ -223,7 +220,7 @@ thought of as a prediction of the image in a canonical pose is finally used to p
 More precisely, we assume that the joint posterior distribution over
 pose and content factors as
 $Q(z^C, z^T | L) = Q(z^T |L)\cdot Q(z^C | z^T, L)$ where both factors are normal distributions.  
-To obtain a draw $(\hat{z}^C, \hat{z}^T)$ from this posterior, we use the following procedure:
+To obtain a draw $(\hat{z}^C, \hat{z}^T)$ from this posterior, we use the following procedure:\vspace{-2mm}
 
 \begin{align*}
 \hat{z}^T &\sim Q(z^T |L; \phi) = \mathcal{N}(\mu_{T}(L; \phi), \mbox{diag}(\sigma_{T}^2(L; \phi))), \\
@@ -288,7 +285,7 @@ end-to-end differentiable.
 
 
 \subsection{{\bf CST-VAE} Model: Composited Spatially Transformed Variational Auto-encoder}\label{sec:cstvae}
-
+\vspace{-3mm}
 
 \begin{figure}[t]
 \begin{center}
