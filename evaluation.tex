@@ -29,11 +29,10 @@ to apply the sigmoid after the transformation.
 
 \subsection{Evaluating the Spatially transformed Variational Autoencoder alone}
 
-We first evaluate our ST-VAE model alone on the MNIST dataset~\citep{lecun1998gradient}
+We first evaluate our ST-VAE (single layer) model alone on the MNIST dataset~\citep{lecun1998gradient}
 and a derived dataset, \emph{TranslatedMNIST}, in which we randomly translated each  $28\times 28$ MNIST example
 within a $36\times 36$ black image.  In both cases, we binarize the images by thresholding at value 128.
-
-
+Figure~\ref{fig:vae_stvae_learning_curves} plots train and test curves over 250000 gradient steps
 
 Ordinary and Translated MNIST comparing
 \begin{itemize}
@@ -67,7 +66,12 @@ Ordinary and Translated MNIST comparing
 \label{fig:stvae_averageddigits}
 }
 \end{center}
- \caption{hello}
+ \caption{
+ \subref{fig:vae_stvae_samples} Comparison of samples from the VAE and ST-VAE generative models.  
+ For the ST-VAE model, we show both the sample in its canonical pose and the final generated image.
+  \subref{fig:stvae_averageddigits}  Averaged images from each MNIST class as learning progresses ---
+  we typically see pose variables converge very quickly.
+ }
 \end{figure}
 
 \begin{figure}[t]
@@ -98,10 +102,16 @@ Directly supervised & 0.999 & 0.96   \\
 \hline
 \end{tabular}%
 }
+\label{fig:vae_stvae_classification}
 }
 \end{center}
 
- \caption{hello}
+ \caption{
+ \subref{fig:vae_stvae_learning_curves} Train and test (per-example) lower bounds on log-likelihood 
+for the vanilla VAE and ST-VAE models on the Translated MNIST data;
+ \subref{fig:vae_stvae_classification} Classification accuracy obtained by supervised training using latent encodings
+ from VAE and ST-VAE models.  More details in text.
+ }
 \end{figure}
 
 
@@ -132,11 +142,23 @@ Show reconstruction results on MNIST and samples from a single STAEVB module wit
 \begin{figure}[t]
 \begin{center}
 \subfigure[]{
-\includegraphics[width=0.3\linewidth]{figs/cstvae_reconstructions.pdf}
+\includegraphics[width=0.4\linewidth]{figs/cstvae_reconstructions.pdf}
 \label{fig:cstvae_reconstructions}
+}\qquad\qquad
+\subfigure[]{
+\raisebox{5mm}{
+\includegraphics[width=0.3\linewidth]{figs/cstvae_classification.pdf}
+\label{fig:cstvae_classification}
+}
 }
 \end{center}
- \caption{hello}
+ \caption{
+ \subref{fig:cstvae_reconstructions}  Images from the Superimposed MNIST dataset with visualizations of
+ intermediate variables in the neural network corresponding to first and second layers and the final reconstruction;
+ \subref{fig:cstvae_classification}
+ Classification accuracy obtained by supervised training using latent encodings
+ from VAE and CST-VAE models on the Supervised MNIST dataset.  More details in text.
+ }
 \end{figure}
 
 
@@ -148,7 +170,6 @@ Show reconstruction results on MNIST and samples from a single STAEVB module wit
 
 
 \subsection{Supervised training}
-
 compare accuracy on something
 
 
