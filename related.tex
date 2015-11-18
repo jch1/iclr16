@@ -1,5 +1,6 @@
+\label{sec:related}
 
-%\cite{*}
+
 
 \subsection{Deep probabilistic generative models}
 
@@ -56,7 +57,9 @@ To achieve this separation, however, they rely on a custom training procedure
 Our method in contrast is able to separate pose from content in an fully unsupervised setting 
 using standard off-the-shelf minibatch gradient methods.
 
-Finally our method relies crucially on the recently introduced Spatial Transformer Networks paper ~\citep{jaderberg2015spatial}, which introduced 
+Finally our method relies crucially on the recently introduced Spatial
+Transformer Networks paper
+ ~\citep{jaderberg2015spatial}, which introduced 
 a fully differentiable module that allows one to warp/rotate images based on some input spatial transformation.
 To our knowledge, we are the first to apply this module in an unsupervised learning setting.  
 
@@ -74,7 +77,7 @@ annotations.
 training set of manually segmented regions.
 Our model also has similarities to that of \cite{le2011learning}, however  they use restricted Boltzmann machines, 
 which require expensive MCMC sampling to estimate gradients and have difficulties reliably estimating the 
-log-partition function.  %ur model
+log-partition function.  %ur model¯
 %falls under the category of variational autoencoders which do not require expensive MCMC sampling.	
 	
 %Amodal completion, where one must ``complete'' a partially visible object, is a challenging vision task

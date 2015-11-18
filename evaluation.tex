@@ -1,4 +1,4 @@
-
+\label{sec:eval}
 
 \begin{figure}[t]
 \begin{center}
@@ -116,7 +116,10 @@ Once the digits have been aligned, the content networks is able to make better p
 
 Finally we evaluate the latent content codes $z^C$ learned by our ST-VAE model 
 in digit classification using the standard MNIST train/test split.  For this experiment
-we use a simple two layer MLP with 32 hidden units in each layer and ReLU nonlinearities.
+we use a simple two layer MLP with 32 hidden units in each layer and
+ReLU nonlinearities
+applied to the posterior mean of $z^C$ inferrred from each image; we
+do not use the labels to fine tune the VAE.
 Figure~\ref{fig:vae_stvae_classification} summarizes the results of the experiment, where we
 compare against three baseline classifiers: (1) an MLP learned on latent codes from the VAE model,
 (2) an MLP trained directly on Translated MNIST images (we call this the ``directly supervised classifier''), 
