@@ -9,12 +9,23 @@ bottom-up inference in order to handle ambiguity.
 For example, consider the problem of object detection
 and instance segmentation (cf. \cite{Hariharan2014})  in the
 presence of clutter/occlusion. 
+
+\begin{wrapfigure}[11]{r}[12pt]{6cm}
+\vspace{-4mm}
+\begin{center}
+    \includegraphics[width=0.375\textwidth]{figs/cows.pdf} \vspace{-2mm}
+    \caption{\footnotesize Some cows}
+    \label{fig:cows}
+  \end{center}
+  \vspace{-2mm}
+\end{wrapfigure}
 In this case, the foreground object may
 obscure almost all of the background object, yet people are still able
 to detect that there are two objects present, to correctly segment
 out both of them, and even to amodally complete the hidden parts of
 the occluded object (cf., \cite{Kar2015}).
 \Kevin{Jon, can you add your image of occluded cows to illustrate this?}
+
 
 One way to tackle this problem is to use generative models.
 In particular, we can imagine the following generative process for an image:
