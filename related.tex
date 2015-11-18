@@ -67,7 +67,11 @@ To our knowledge, we are the first to apply this module in an unsupervised learn
 Layer based models have been used in a number of works in computer vision  --- traditionally
 taking advantage of motion cues to decompose video data into layers~\cite{wang1994representing,ayer1995layered,kannan2005generative}.
 However there have been works that apply layer based reasoning on images.
-\cite{yang2012layered}, for example, propose a layered model for segmentation but rely heavily on bounding box and categorical annotations.	
+\cite{yang2012layered}, for example, propose a layered model for
+segmentation but rely heavily on bounding box and categorical
+annotations.	
+\cite{Isola2013} deconstruct a single image into layers, but require a
+training set of manually segmented regions.
 Our model also has similarities to that of \cite{le2011learning}, however  they use restricted Boltzmann machines, 
 which require expensive MCMC sampling to estimate gradients and have difficulties reliably estimating the 
 log-partition function.  %ur model
