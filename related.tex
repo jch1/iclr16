@@ -43,19 +43,22 @@ One of our major contributions is a model that is capable of separating the pose
 which is of course a classic problem in computer vision \Jon{is there a really ancient paper that we can cite here? The older the better }. 
 Here we highlight several of the most related works from 
 the deep learning community.  
-Many of these work related works have been influenced by \cite{hinton2011transforming} on Transformed Auto-encoder models
-where (as in our own work), pose is explicitly separated from content and an autoencoder is trained to predict small transformations of an image \Jon{fix this description}.	
-More recently,  \cite{dosovitskiy2014learning} introduced a convolutional network to generate images of chairs where pose was explicitly separated out, and
-\cite{cheung2014discovering} introduced an auto-encoder where a subset of variables such as pose can be explicitly observed and remaining
+Many of these work related works have been influenced by \cite{hinton2011transforming} on Transformed Auto-encoder models,
+in which pose is explicitly separated from content in an autoencoder which is trained to predict (known)
+small transformations of an image 
+More recently,  \cite{dosovitskiy2014learning} introduced a convolutional network to generate images of chairs where pose was explicitly separated out, and \cite{cheung2014discovering} introduced an auto-encoder where a subset of variables such as pose can be explicitly observed and remaining
 variables are encouraged to explain orthogonal factors of variation.   
-In all of these works, there is an element of supervised learning, which our method does not require. 
-
 Most relevant in this line of works is that of~\cite{kulkarni2015deep}, which, like us, 
-separate the content of an image from pose parameters using variational auto-encoder.
-To achieve this separation, however, they rely on a custom training procedure 
-\Jon{where minibatches only allow one type of variable to vary}.
+separate the content of an image from pose parameters using a variational auto-encoder.
+In all of these works, however, there is an element of supervision, where variables such as pose
+and lighting are known at training time. 
+%To achieve this separation, however, they train 
+%rely on a custom training procedure in whic.
 Our method in contrast is able to separate pose from content in an fully unsupervised setting 
 using standard off-the-shelf minibatch gradient methods.
+
+
+
 
 Finally our method relies crucially on the recently introduced Spatial
 Transformer Networks paper
@@ -68,7 +71,7 @@ To our knowledge, we are the first to apply this module in an unsupervised learn
 
 \subsection{Layered models and amodal completion}
 Layer based models have been used in a number of works in computer vision  --- traditionally
-taking advantage of motion cues to decompose video data into layers~\cite{wang1994representing,ayer1995layered,kannan2005generative}.
+taking advantage of motion cues to decompose video data into layers~\citep{wang1994representing,ayer1995layered,kannan2005generative}.
 However there have been works that apply layer based reasoning on images.
 \cite{yang2012layered}, for example, propose a layered model for
 segmentation but rely heavily on bounding box and categorical
