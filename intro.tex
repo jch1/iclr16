@@ -7,8 +7,15 @@ we care about is expensive.
 Furthermore, some problems require top-down inference as well as
 bottom-up inference in order to handle ambiguity.
 For example, consider the problem of object detection
-and instance segmentation (cf. \cite{Hariharan2014})  in the
-presence of clutter/occlusion. 
+and instance segmentation  in the
+presence of clutter/occlusion.,
+ as illustrated in Figure~\ref{fig:cows}.
+In this case, the foreground object may
+obscure almost all of the background object, yet people are still able
+to detect that there are two objects present, to correctly segment
+out both of them, and even to amodally complete the hidden parts of
+the occluded object (cf., \cite{Kar2015}).
+
 
 \begin{wrapfigure}[11]{r}[12pt]{6cm}
 \vspace{-4mm}
@@ -19,12 +26,6 @@ presence of clutter/occlusion.
   \end{center}
   \vspace{-2mm}
 \end{wrapfigure}
-
-In this case, the foreground object may
-obscure almost all of the background object, yet people are still able
-to detect that there are two objects present, to correctly segment
-out both of them, and even to amodally complete the hidden parts of
-the occluded object, as illustrated in Figure~\ref{fig:cows} (cf., \cite{Kar2015}).
 
 
 
@@ -73,7 +74,7 @@ for short.
 Our resulting inference algorithm combines top-down (generative)
 and bottom-up (discriminative) components in an interleaved fashion as follows:
 (1)  First we recognize (bottom-up) the foreground object, factoring apart pose and content;
-(2) Having recognized it, we generate (top-down) what hidden image 1 should look
+(2) Having recognized it, we generate (top-down) what the hidden image  should look
 like;
 (3) Finally, we virtually remove this generated hidden image from the observed
 image to get the residual image, and we repeat the process.

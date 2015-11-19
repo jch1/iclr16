@@ -33,25 +33,31 @@ Most relevant in this line of works is that of~\cite{kulkarni2015deep}, which, l
 separate the content of an image from pose parameters using a variational auto-encoder.
 In all of these works, however, there is an element of supervision, where variables such as pose
 and lighting are known at training time. 
-Our method in contrast is able to separate pose from content in an fully unsupervised setting 
-using standard off-the-shelf minibatch gradient methods.
+Our method,
+which is based on the recently introduced Spatial
+Transformer Networks paper
+ ~\citep{jaderberg2015spatial},
+is able to separate pose from content in an fully unsupervised setting 
+using standard off-the-shelf gradient methods.
 
 
-
-
+\eat{
 Finally our method relies crucially on the recently introduced Spatial
 Transformer Networks paper
  ~\citep{jaderberg2015spatial}, which introduced 
 a fully differentiable module that allows one to warp/rotate images based on some input spatial transformation.
 To our knowledge, we are the first to apply this module in an unsupervised learning setting.  
+}
 
 %	Discovering Hidden Factors of Variation in Deep Networks \cite{cheung2014discovering},
 %	Chair paper \cite{dosovitskiy2014learning}: The above two papers both separate style from pose (and other things like lighting) but use ordinary autoencoders which do not have the same probabilistic semantics.  They also train their models in a supervised setting and thus required labeled data for pose/lighting/etc
 \vspace{-2mm}
-\subsection{Layered models and amodal completion}\vspace{-2mm}
-Layer based models have been used in a number of works in computer vision  --- traditionally
-taking advantage of motion cues to decompose video data into layers~\citep{wang1994representing,ayer1995layered,kannan2005generative}.
-However there have been works that apply layer based reasoning on images.
+\subsection{Layered models of images}\vspace{-2mm}
+
+Layer models of images is an old idea.
+Most works 
+take advantage of motion cues to decompose video data into layers~\citep{wang1994representing,ayer1995layered,kannan2005generative}.
+However, there have been some papers that work from single images.
 \cite{yang2012layered}, for example, propose a layered model for
 segmentation but rely heavily on bounding box and categorical
 annotations.	
