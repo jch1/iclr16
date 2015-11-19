@@ -13,18 +13,19 @@ presence of clutter/occlusion.
 \begin{wrapfigure}[11]{r}[12pt]{6cm}
 \vspace{-4mm}
 \begin{center}
-    \includegraphics[width=0.375\textwidth]{figs/cows.pdf} \vspace{-2mm}
-    \caption{\footnotesize Some cows}
+    \includegraphics[width=0.375\textwidth]{figs/two_cows.png} \vspace{-2mm}
+    \caption{\footnotesize Illustration of occlusion.}
     \label{fig:cows}
   \end{center}
   \vspace{-2mm}
 \end{wrapfigure}
+
 In this case, the foreground object may
 obscure almost all of the background object, yet people are still able
 to detect that there are two objects present, to correctly segment
 out both of them, and even to amodally complete the hidden parts of
-the occluded object (cf., \cite{Kar2015}).
-\Kevin{Jon, can you add your image of occluded cows to illustrate this?}
+the occluded object, as illustrated in Figure~\ref{fig:cows} (cf., \cite{Kar2015}).
+
 
 
 One way to tackle this problem is to use generative models.
@@ -35,8 +36,6 @@ representing its class label, style, etc;
 place the object in the 2d image plane, by sampling a ``pose vector'',
 representing location, scale, etc. 
 (3) Render an image of the object onto a hidden canvas or layer;
-\Kevin{The term layer could refer to a hidden image or a hidden layer
-  in the neural network...}
 (4) Repeat this process for $N$
 objects (we assume in this work that $N$ is fixed);
 (5) Finally, generate
