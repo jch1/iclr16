@@ -95,11 +95,14 @@ for the vanilla VAE and ST-VAE models on the Translated MNIST data;
  }
 \end{figure}
 \vspace{-2mm}
-\subsection{Evaluating the Spatially transformed Variational Autoencoder alone}\vspace{-2mm}
+\subsection{Evaluating the ST-VAE on images of single objects}
+\vspace{-2mm}
 
 We first evaluate our ST-VAE (single layer) model alone on the MNIST dataset~\citep{lecun1998gradient}
 and a derived dataset, \emph{TranslatedMNIST}, in which we randomly translated each  $28\times 28$ MNIST example
-within a $36\times 36$ black image.  In both cases, we binarize the images by thresholding at value 128.
+within a $36\times 36$ black image.  In both cases, we binarize the
+images by thresholding at value 128,
+as in~\cite{Kingma2014}.
 Figure~\ref{fig:vae_stvae_learning_curves} plots train and test log-likelihoods over 250000 gradient steps
 comparing the vanilla VAE model against the ST-VAE model, where we see that from the beginning the ST-VAE
 model is able to achieve a much better likelihood while not overfitting.  This can also be seen in Figure~\ref{fig:vae_stvae_samples}
@@ -110,7 +113,8 @@ which typically are visually closer to MNIST digits.
 
 Interestingly, the canonical images tend to be slightly smaller versions
 of the digits and our model relies on the Spatial Transformer Networks to scale them up at the end of the generative process.
-Though we have performed a careful investigation, reasons for this effect may be a combination of the fact (1) that scaling up the images introduces some blur which accounts for small variations in  nearby pixels and (2) it  is easier to encode smaller digits than larger ones.
+Though we have not performed a careful investigation, 
+possible reasons for this effect may be a combination of the fact (1) that scaling up the images introduces some blur which accounts for small variations in  nearby pixels and (2) it  is easier to encode smaller digits than larger ones.
  We also observe (Figure~\ref{fig:stvae_averageddigits})
 that the pose network when trained on our dataset tends to converge rapidly, bringing digits to a centered canonical pose
 within tens of gradient updates. 
@@ -134,7 +138,8 @@ that can be obtained with this MLP training directly on the original MNIST set).
 pose variation do much worse than ST-VAE on this task and exhibit significant overfitting.
 
 \vspace{-2mm}
-\subsection{Evaluating the CST Variational Autoencoder}
+\subsection{Evaluating the CST-VAE on images with multiple overlapping
+  objects}
 \vspace{-2mm}
 
 \begin{figure}[t]
@@ -161,11 +166,11 @@ pose variation do much worse than ST-VAE on this task and exhibit significant ov
 for the vanilla VAE and CST-VAE models on the Superimposed MNIST data;
   \subref{fig:cstvae_classification}
  Classification accuracy obtained by supervised training using latent encodings
- from VAE and CST-VAE models on the Supervised MNIST dataset.  More details in text.
+ from VAE and CST-VAE models.
+  More details in text.
  \subref{fig:cstvae_reconstructions}  Images from the Superimposed MNIST dataset with visualizations of
  intermediate variables in the neural network corresponding to first and second layers and the final reconstruction.
- Chance performance on this task is 0.018 (1.8\% accuracy) since we require that the image recover both digits correctly
- within an image.}
+}
 \end{figure}
 
 
@@ -194,16 +199,20 @@ Figure~\ref{fig:cstvae_learning_curves}
 plots train and test log-likelihoods over 250000 gradient steps
 comparing the vanilla VAE model against the ST-VAE and CST-VAE model, where 
 we see that from the beginning the CST-VAE
-model is able to achieve a much better solution than the ST-VAE model which in turn outperforms the VAE model.  
-To control the number of latent dimensions across models in this experiment,
+model is able to achieve a much better solution than the ST-VAE model
+which in turn outperforms the VAE model.  
+In this experiment, we ensure that the total number of latent dimensions across all
+models is similar.
+In particular, 
 we allow the VAE and ST-VAE models to use 50 latent dimensions for content.
-The ST-VAE model uses an additional 6 dimensions for the latent pose. For the CST-VAE model we use 20 latent content dimensions
+The ST-VAE model uses an additional 6 dimensions for the latent pose.
+For the CST-VAE model we use 20 latent content dimensions
 and 6 latent pose dimensions per layer (for a total of 52 latent dimensions). 
 
 
 Figure~\ref{fig:cstvae_reconstructions} highlights the interpretability of our model.
 On the left column, we show example superimposed digits from our dataset and ask the 
-CST-VAE to reconstruct them (second column).  As a byproduct of this reconstruction, however,
+CST-VAE to reconstruct them (second column).  As a byproduct of this reconstruction,
 we are able to individually separate a foreground image (third column) and background image (fourth column),
 often corresponding to the correct digits that were used to generate the observation.  
  While not perfect, the CST-VAE model manages to do well even on some challenging examples where
@@ -219,11 +228,21 @@ learned by the CST-VAE model.
 Specifically we concatenate the latent content vectors $z^C_1$ and $z^C_2$
 which are fed as input to the classifier network.  
 As baselines we compare against (1) the vanilla VAE latent representations 
-and (2) a classifier trained directly on images of superimposed digits.  We report accuracy, requiring that the classifier
-be correct on both digits within an image to be correct.  
-Figure~\ref{fig:cstvae_classification} visualizes the results.  We see that the classifier that is trained directly
+and (2) a classifier trained directly on images of superimposed
+digits.  We report accuracy, requiring that the classifier 
+be correct on both digits within an image to be correct.\footnote{
+%
+Thus  
+ chance performance on this task is 0.018 (1.8\% accuracy) since we
+ require that the image recover both digits correctly 
+ within an image.
+}
+
+Figure~\ref{fig:cstvae_classification} visualizes the results.  
+We see that the classifier that is trained directly
 on pixels exhibits severe overfitting and performs the worst.  The three variational auto-encoder models also
-slightly overfit, but perform better, with the CST-VAE obtaining the best results, with almost twice the accuracy as the vanilla
+slightly overfit, but perform better, with the CST-VAE obtaining the
+best results, with almost twice the accuracy as the vanilla 
 VAE model.
 
 \vspace{-2mm}
