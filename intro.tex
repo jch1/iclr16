@@ -55,7 +55,7 @@ in the two-layer setting.
  See Section~\ref{sec:models} for more details.
 }
 
-There have been several previous attempts to use layered generative
+\looseness -1 There have been several previous attempts to use layered generative
 models to perform scene parsing and object detection in clutter (see
 Section~\ref{sec:related} for a review of related work). However, such
 methods usually run into computational bottlenecks, since inverting
@@ -70,7 +70,7 @@ two ways. First, we extend it to the sequential setting, where we
 generate the observed image in stages by compositing hidden layers
 from front to back. %back to front. 
 Second, we combine the VAE with the spatial transformer network of
-\citep{jaderberg2015spatial}, which allows us to factor out variations
+\citep{jaderberg2015spatial}, allowing us to factor out variations
 in pose (e.g., location) from variations in content (e.g., identity).
 We call our model the ``composited spatially transformed VAE'', or CST-VAE
 for short.

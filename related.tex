@@ -9,18 +9,20 @@ generative adversarial networks \citep{denton2015deep, goodfellow2014generative}
 as well as variational auto-encoder (VAE) models \citep{Kingma2014,kingma2014semi,rezende2014stochastic,burda2015importance}
 which are most relevant to our setting.  
 
-Among the variational auto-encoder works, our work is most comparable to 
+Among the variational auto-encoder literature, our work is most comparable to 
 the DRAW network of~\cite{gregor2015draw}.  As with our proposed model, 
 the DRAW network is a generative model of images in the variational auto-encoder framework
-that decomposes image formation into multiple stages of additions to a canvas matrix.  
-Where their paper assumes a generic LSTM based generative model of these sequential 
-drawing actions, however, we enforce a prior that allows our stages to have an intuitive interpretation
-as layers (that one might use in typical photo editing software).
+that decomposes image formation into multiple stages of additions to a canvas matrix.  The DRAW paper assumes an LSTM based generative model of these sequential 
+drawing actions which is more general than our model.
+In practice, these drawing actions seem to progressively refine an initially blurry region of an image to  be sharper.
+In our work, we enforce a prior that allows our layers to have an intuitive correspondence
+as objects (that one might have in typical photo editing software).  This relationship has the advantage of being interpretable
+and could potentially be useful for semi-supervised learning.
 
 
 \vspace{-2mm}
 \subsection{Modeling Transformation in neural networks}\vspace{-2mm}
-One of our major contributions is a model that is capable of separating the pose of an object from its appearance,
+\looseness -1 One of our major contributions is a model that is capable of separating the pose of an object from its appearance,
 which is of course a classic problem in computer vision.
 Here we highlight several of the most related works from 
 the deep learning community.  

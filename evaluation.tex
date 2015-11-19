@@ -92,13 +92,13 @@ Directly supervised & 0.999 & 0.96   \\
 for the vanilla VAE and ST-VAE models on the Translated MNIST data;
  \subref{fig:vae_stvae_classification} Classification accuracy obtained by supervised training using latent encodings
  from VAE and ST-VAE models.  More details in text.
- }
+ }\vspace{-2mm}
 \end{figure}
 \vspace{-2mm}
 \subsection{Evaluating the ST-VAE on images of single objects}
 \vspace{-2mm}
 
-We first evaluate our ST-VAE (single image layer) model alone on the MNIST dataset~\citep{lecun1998gradient}
+\looseness -1 We first evaluate our ST-VAE (single image layer) model alone on the MNIST dataset~\citep{lecun1998gradient}
 and a derived dataset, \emph{TranslatedMNIST}, in which we randomly translated each  $28\times 28$ MNIST example
 within a $36\times 36$ black image.  In both cases, we binarize the
 images by thresholding,
@@ -122,11 +122,11 @@ Once the digits have been aligned, the content network is able to make better pr
 
 Finally we evaluate the latent content codes $z^C$ learned by our ST-VAE model 
 in digit classification using the standard MNIST train/test split.  For this experiment
-we use a simple two layer MLP with 32 hidden units in each layer and
+we use a two layer MLP with 32 hidden units in each layer and
 ReLU nonlinearities
 applied to the posterior mean of $z^C$ inferred from each image; we
 do not use the labels to fine tune the VAE.
-Figure~\ref{fig:vae_stvae_classification} summarizes the results of the experiment, where we
+Figure~\ref{fig:vae_stvae_classification} summarizes the results, where we
 compare against three baseline classifiers: (1) an MLP learned on latent codes from the VAE model,
 (2) an MLP trained directly on Translated MNIST images (we call this the ``directly supervised classifier''), 
 and (3) the approach of~\cite{jaderberg2015spatial} using the same MLP as above trained directly
@@ -161,7 +161,7 @@ pose variation do much worse than ST-VAE on this task and exhibit significant ov
 \subfigure[]{
 \includegraphics[width=0.35\linewidth]{figs/cstvae_reconstructions.pdf}
 \label{fig:cstvae_reconstructions}
-}\vspace{-4mm}
+}\vspace{-5mm}
 \end{center}
  \caption{\footnotesize
  \subref{fig:cstvae_learning_curves} Train and test (per-example) lower bounds on log-likelihood 
@@ -172,7 +172,7 @@ for the vanilla VAE and CST-VAE models on the Superimposed MNIST data;
   More details in text.
  \subref{fig:cstvae_reconstructions}  Images from the Superimposed MNIST dataset with visualizations of
  intermediate variables in the neural network corresponding to first and second image layers and the final reconstruction.
-}
+}\vspace{-3mm}
 \end{figure}
 
 
@@ -223,8 +223,8 @@ often corresponding to the correct digits that were used to generate the observa
  variational auto-encoder framework is that it is also able to represent uncertainty over different interpretations
  of the input image.
 
-Finally, we evaluate our performance on a classification task.
-Here we use the same two layer MLP architecture (with 256 hidden layer units) as we did 
+Finally, we evaluate our performance on classification.
+We use the same two layer MLP architecture (with 256 hidden layer units) as we did 
 with the ST-VAE model, and train using latent representations
 learned by the CST-VAE model.  
 Specifically we concatenate the latent content vectors $z^C_1$ and $z^C_2$
@@ -232,7 +232,7 @@ which are fed as input to the classifier network.
 As baselines we compare against (1) the vanilla VAE latent representations 
 and (2) a classifier trained directly on images of superimposed
 digits.  We report accuracy, requiring that the classifier 
-be correct on both digits within an image to be correct.\footnote{
+be correct on both digits within an image.\footnote{
 %
 Thus  
  chance performance on this task is 0.018 (1.8\% accuracy) since we
