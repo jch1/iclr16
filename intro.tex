@@ -36,7 +36,11 @@ representing its class label, style, etc;
 (2) Choose where to
 place the object in the 2d image plane, by sampling a ``pose vector'',
 representing location, scale, etc. 
-(3) Render an image of the object onto a hidden canvas or layer;
+(3) Render an image of the object onto a hidden canvas or layer;\footnote{
+We  use  ``layer''  in this paper mainly to refer to image layers, however
+in the evaluation section (Section~\ref{sec:eval}) ``layer'' will also be used to refer to
+neural network layers where the meaning will be clear from context.
+}
 (4) Repeat this process for $N$
 objects (we assume in this work that $N$ is fixed);
 (5) Finally, generate
@@ -93,7 +97,7 @@ interpret cluttered images, and that the inferred latent
 representation is a much better  feature vector for a discriminative
 classification task than working with the original cluttered images.
 
-
+\vspace{-3mm}
 
 
 \eat{

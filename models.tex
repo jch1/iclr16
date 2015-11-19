@@ -163,7 +163,8 @@ is differentiable with respect to parameters $\theta$ and $\phi$ in certain situ
 when $Q$ is Gaussian and the likelihood under the generative model $P(x|z^C,z^T; \theta)$ is differentiable, 
 then the stochastic variational lower bound can be written in an end-to-end
 differentiable way via the so-called \emph{reparameterization trick} introduced in ~\cite{Kingma2014}.
-Furthermore, the objective in Equation~\ref{eqn:vae_objective} can be interpreted as a reconstruction cost plus regularization term on the middle layer
+Furthermore, the objective in Equation~\ref{eqn:vae_objective} can be interpreted as a reconstruction cost plus regularization term on the 
+bottleneck portion
 of a neural network, which is why we think of these models as auto-encoders.  
 %For this reason, the generative model $P(x|z^C, z^T )$ is also called a decoder (more specifically we will
 %refer to $f_C$ as the content decoder and $f_T$ as the pose decoder)

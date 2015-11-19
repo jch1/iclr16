@@ -98,7 +98,7 @@ for the vanilla VAE and ST-VAE models on the Translated MNIST data;
 \subsection{Evaluating the ST-VAE on images of single objects}
 \vspace{-2mm}
 
-We first evaluate our ST-VAE (single layer) model alone on the MNIST dataset~\citep{lecun1998gradient}
+We first evaluate our ST-VAE (single image layer) model alone on the MNIST dataset~\citep{lecun1998gradient}
 and a derived dataset, \emph{TranslatedMNIST}, in which we randomly translated each  $28\times 28$ MNIST example
 within a $36\times 36$ black image.  In both cases, we binarize the
 images by thresholding,
@@ -171,7 +171,7 @@ for the vanilla VAE and CST-VAE models on the Superimposed MNIST data;
  from VAE and CST-VAE models.
   More details in text.
  \subref{fig:cstvae_reconstructions}  Images from the Superimposed MNIST dataset with visualizations of
- intermediate variables in the neural network corresponding to first and second layers and the final reconstruction.
+ intermediate variables in the neural network corresponding to first and second image layers and the final reconstruction.
 }
 \end{figure}
 
@@ -195,7 +195,7 @@ In this section we use the same pose/content encoder and decoder
 architectures as above except that we set hidden content encoder/decoder layers to be 128-dimensional --- empirically,
 we find that larger hidden layers tend to be sensitive to initialization for this model.
 We also assume that observed images are composited
-using two layers (which can be thought of as foreground and background).
+using two image layers (which can be thought of as foreground and background).
 
 Figure~\ref{fig:cstvae_learning_curves}
 plots test log-likelihoods over 250000 gradient steps
@@ -219,7 +219,7 @@ we are able to individually separate a foreground image (third column) and backg
 often corresponding to the correct digits that were used to generate the observation.  
  While not perfect, the CST-VAE model manages to do well even on some challenging examples where
  digits exhibit high occlusion.  To generate these foreground/background images, we use the posterior mean
- inferred by the network for each layer; however, we note that one of the advantages of the 
+ inferred by the network for each image layer $L_i$; however, we note that one of the advantages of the 
  variational auto-encoder framework is that it is also able to represent uncertainty over different interpretations
  of the input image.
 
