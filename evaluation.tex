@@ -101,7 +101,7 @@ for the vanilla VAE and ST-VAE models on the Translated MNIST data;
 We first evaluate our ST-VAE (single layer) model alone on the MNIST dataset~\citep{lecun1998gradient}
 and a derived dataset, \emph{TranslatedMNIST}, in which we randomly translated each  $28\times 28$ MNIST example
 within a $36\times 36$ black image.  In both cases, we binarize the
-images by thresholding at value 128,
+images by thresholding,
 as in~\cite{Kingma2014}.
 Figure~\ref{fig:vae_stvae_learning_curves} plots train and test log-likelihoods over 250000 gradient steps
 comparing the vanilla VAE model against the ST-VAE model, where we see that from the beginning the ST-VAE
@@ -132,9 +132,11 @@ compare against three baseline classifiers: (1) an MLP learned on latent codes f
 and (3) the approach of~\cite{jaderberg2015spatial} using the same MLP as above trained directly
 on images but with a spatial transformer network.
 As a point of reference, we also provide the performance of our classifier on the original $28\times 28$ MNIST
-dataset.  We see that ST-VAE model is able to learn a latent representation of image content that holds enough information
-to be competitive with the ~\cite{jaderberg2015spatial} approach (both of which slightly outperform performance
-that can be obtained with this MLP training directly on the original MNIST set).  The approaches that do not account for
+dataset.  We see that the ST-VAE model is able to learn a latent representation of image content that holds enough information
+to be competitive with the ~\cite{jaderberg2015spatial} approach (both of which slightly outperform 
+%performance
+%that can be obtained with this 
+the MLP training directly on the original MNIST set).  The approaches that do not account for
 pose variation do much worse than ST-VAE on this task and exhibit significant overfitting.
 
 \vspace{-2mm}
@@ -196,18 +198,18 @@ We also assume that observed images are composited
 using two layers (which can be thought of as foreground and background).
 
 Figure~\ref{fig:cstvae_learning_curves}
-plots train and test log-likelihoods over 250000 gradient steps
+plots test log-likelihoods over 250000 gradient steps
 comparing the vanilla VAE model against the ST-VAE and CST-VAE model, where 
 we see that from the beginning the CST-VAE
 model is able to achieve a much better solution than the ST-VAE model
-which in turn outperforms the VAE model.  
+which in turn outperforms the VAE model.   
 In this experiment, we ensure that the total number of latent dimensions across all
 models is similar.
 In particular, 
 we allow the VAE and ST-VAE models to use 50 latent dimensions for content.
 The ST-VAE model uses an additional 6 dimensions for the latent pose.
 For the CST-VAE model we use 20 latent content dimensions
-and 6 latent pose dimensions per layer (for a total of 52 latent dimensions). 
+and 6 latent pose dimensions per image layer $L_i$ (for a total of 52 latent dimensions). 
 
 
 Figure~\ref{fig:cstvae_reconstructions} highlights the interpretability of our model.

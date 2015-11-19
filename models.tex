@@ -32,9 +32,9 @@ Among other things, the CST-VAE model allows us to tease
 apart the component layers (or objects) that make up an image and
 reason about occlusion in order to perform tasks such as amodal
 completion 
-\cite{Kar2015}
+\citep{Kar2015}
 or instance segmentation
-\cite{Hariharan2014<}.
+\citep{Hariharan2014}.
 Furthermore, it can be trained in a fully unsupervised fashion using  minibatch stochastic
 gradient descent methods but can also make use of labels in supervised or semi-supervised settings.
  
@@ -134,8 +134,8 @@ distribution over latents is parameterized by a particular form
 where $\gamma$ are data-dependent parameters.
 Rather than optimizing these at runtime,
 we compute them using 
-an MLP, $\gamma=f_{enc}(x,\phi)$ is called a \emph{recognition model} or an
-encoder.
+an MLP, $\gamma=f_{enc}(x,\phi)$, which is called a \emph{recognition model} or an
+\emph{encoder}.
 We jointly optimize the generative model parameters $\theta$ and
 recognition model parameters $\phi$ by maximizing the following:
 \begin{equation}\label{eqn:vae_objective}\footnotesize
@@ -151,8 +151,8 @@ of the training set,
 and
 $S$ is the number of times we must sample the posterior per training example
 (in practice, we use $S=1$, following~\cite{Kingma2014}).
-We will use a diagonal multivariate Gaussian for $Q$, so the 
-the recognition model has to predict the mean and  variance,
+We will use a diagonal multivariate Gaussian for $Q$, so that
+the recognition model just has to predict the mean and  variance,
  $\mu(x;\phi)$ and $\sigma^2(x;\phi)$.
 
 
