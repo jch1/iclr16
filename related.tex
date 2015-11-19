@@ -15,9 +15,11 @@ the DRAW network is a generative model of images in the variational auto-encoder
 that decomposes image formation into multiple stages of additions to a canvas matrix.  The DRAW paper assumes an LSTM based generative model of these sequential 
 drawing actions which is more general than our model.
 In practice, these drawing actions seem to progressively refine an initially blurry region of an image to  be sharper.
-In our work, we enforce a prior that allows our layers to have an intuitive correspondence
-as objects (that one might have in typical photo editing software).  This relationship has the advantage of being interpretable
-and could potentially be useful for semi-supervised learning.
+In our work, we also construct the image sequentially,
+but each step is encouraged to correspond to a layer in the image,
+similar to what one might have in typical photo editing software.
+This encourages our hidden stochastic variable to be interpretable,
+which could potentially be useful for semi-supervised learning.
 
 
 \vspace{-2mm}
