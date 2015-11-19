@@ -79,14 +79,19 @@ to handle multiple layers. % associativity of the over operator
 
  
 
-To summarize, the CST-VAE model can be written as the following generative process.  Let $x_0=\mathbf{0}^{w\times h}$ (i.e., a black image).   For $i=1,\dots,N$:\vspace{-2mm}
+To summarize, the CST-VAE model can be written as the following generative process.  Let $x_0=\mathbf{0}^{w\times h}$ (i.e., a black image).   For $i=1,\dots,N$:\vspace{-4mm}
+
+{\footnotesize
 \begin{align*}
 z_i^C, z_i^T  &\sim \mathcal{N}(0, I), \\
 C_i &= f_C(z_i^C; \theta_C), \\
 T_i &= f_T(z_i^T; \theta_T), \\
 L_i &= \mbox{STN}(C_i, T_i), \\
-x_i &= x_{i-1} \oplus L_i,
-\end{align*}
+x_i &= x_{i-1} \oplus L_i.
+\end{align*}\vspace{-4mm}
+}
+
+The final image pixels are then drawn conditioned on the pixels of $x_N$.  For binary images,
 setting the last $x_i$ as the observed image (i.e., $x\equiv x_N$). \Jon{not quite right yet ---
 if images are binary, then we model $P(x| x_N)$ as a bernoulli.  If it's continuous, then $P(x|x_N)$ could be Gaussian.}
 See Figure~\ref{fig:compositestvae_gm} for
@@ -220,15 +225,16 @@ thought of as a prediction of the image in a canonical pose is finally used to p
 More precisely, we assume that the joint posterior distribution over
 pose and content factors as
 $Q(z^C, z^T | L) = Q(z^T |L)\cdot Q(z^C | z^T, L)$ where both factors are normal distributions.  
-To obtain a draw $(\hat{z}^C, \hat{z}^T)$ from this posterior, we use the following procedure:\vspace{-2mm}
+To obtain a draw $(\hat{z}^C, \hat{z}^T)$ from this posterior, we use the following procedure:\vspace{-4mm}
 
+{\footnotesize
 \begin{align*}
 \hat{z}^T &\sim Q(z^T |L; \phi) = \mathcal{N}(\mu_{T}(L; \phi), \mbox{diag}(\sigma_{T}^2(L; \phi))), \\
 \hat{T} &= f_T(\hat{z}^T), \\
 \hat{C} &= \mbox{STN}(L, \hat{T}^{-1}), \\
 \hat{z}^C &\sim Q(z^C | z^T, L; \phi) =  \mathcal{N}(\mu_{C}(\hat{C}; \phi), \mbox{diag}(\sigma_{C}^2(\hat{C}; \phi))).
-\end{align*}
-
+\end{align*}\vspace{-2mm}
+}
 %\kevin{Just write $\mu_{T}()$ instead of $\mu_{enc,T}$. Maybe we need a
 %  table summarizing notation?}
 
@@ -336,7 +342,10 @@ $\Delta_{i+1} = \max (0, \Delta_i - L_i)$.  Assuming that observed and predicted
 Note that our encoder for layer $L_i$ requires that the decoder has been run for layer $L_{i-1}$.  Thus it's not possible to separate the generative
 and recognition models into disjoint parts as in the ST-VAE model.  Figure~\ref{fig:cstvae} unrolls the entire CST-VAE network (combining
 both generative and recognition models) for two layers.
-\Jon{mention parameter sharing, regularization}
+
+
+
+
 
 
 

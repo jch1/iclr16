@@ -58,13 +58,13 @@ methods usually run into computational bottlenecks, since inverting
 such generative models is intractable.
 In this paper, we build on recent work (primarily \cite{Kingma2014,gregor2015draw})
 that shows how to jointly train a generative model and an inference
-network in a way that optimizes a variatonal lower bound on the log
+network in a way that optimizes a variational lower bound on the log
 likelihood of the data;
-this has been called a ``variational autoencoder'' or VAE.
+this has been called a ``variational auto-encoder'' or VAE.
 In particular, we extend this prior work in
 two ways. First, we extend it to the sequential setting, where we
 generate the observed image in stages by compositing hidden layers
-from back to front.
+from back to front. \Jon{we have to be a bit careful about claiming this}
 Second, we combine the VAE with the spatial transformer network of
 \citep{jaderberg2015spatial}, which allows us to factor out variations
 in pose (e.g., location) from variations in content (e.g., identity).
