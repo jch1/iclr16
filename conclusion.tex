@@ -1,7 +1,6 @@
-
-
-Future work:
-	convolutional models would let this scale to more interesting things
-	
-	
+\vspace{-2mm}
+Probabilistic graphical models with generative semantics were popular in vision not too many years ago 
+but in recent years have largely fallen out of favor. These more traditional generative models typically are burdened by slow inference and can be surprisingly unwieldy since good accuracy often relied on maintaining code for a large family of different handcrafted visual features which had to be tuned appropriately.  However our work suggests that we may not want to throw the baby out with the bathwater just yet.  
+Probabilistic generative models often have interpretable  semantics  and allow us to learn with supervision, weak/semi-supervision and no supervision all within a unified framework.  Our models are examples of this type of interpretable generative model that \emph{can} coexist with rich feature hierarchies that are automatically tuned by end-to-end backpropagation. They are also fast at test time, requiring just a single forward pass through a neural network.  Finally they can be trained with no labeled data. Thus we believe that this combining of the best of both worlds will be a fruitful area of future work in both representation learning
+and computer vision.
 

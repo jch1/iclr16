@@ -11,48 +11,28 @@ which are most relevant to our setting.
 
 Among the variational auto-encoder works, our work is most comparable to 
 the DRAW network of~\cite{gregor2015draw}.  As with our proposed model, 
-the DRAW network is generative model of images in the variational auto-encoder framework
+the DRAW network is a generative model of images in the variational auto-encoder framework
 that decomposes image formation into multiple stages of additions to a canvas matrix.  
 Where their paper assumes a generic LSTM based generative model of these sequential 
 drawing actions, however, we enforce a prior that allows our stages to have an intuitive interpretation
 as layers (that one might use in typical photo editing software).
 
 
-%VAE papers
-%		importance weighted auto-encoders \cite{burda2015importance}
-%		 VAE papers \cite{Kingma2014, kingma2014semi,rezende2014stochastic}
-%		DRAW \cite{gregor2015draw}
-%		Tejas Kulkarni?s paper \cite{kulkarni2015deep}	
-%		Adversarial networks \cite{denton2015deep, goodfellow2014generative}
-		
-%These papers are deep (and sort of generative) but definitely not probabilistic
-%Texture generation \cite{gatys2015a, gatys2015b}
-	
-%\Jon{We specifically need to spend some time differentiating from the DRAW network
-%	which is by far the most related to the final proposed model.  The biggest difference is the RNN
-%	which assumes that layers (what they call glimpses) are dependent on past layers (both in the 
-%	generative model as well as in the recognition model.
-%	 Other differences: they use an attention model which seems to help a lot --- our spatial
-%	 transformer part can also be interpreted as a kind of attention model (but it's not really the same).
-%	 They also composite using a different (less interpretable) function.
-%	}
 \vspace{-2mm}
 \subsection{Modeling Transformation in neural networks}\vspace{-2mm}
 One of our major contributions is a model that is capable of separating the pose of an object from its appearance,
-which is of course a classic problem in computer vision \Jon{is there a really ancient paper that we can cite here? The older the better }. 
+which is of course a classic problem in computer vision.
 Here we highlight several of the most related works from 
 the deep learning community.  
-Many of these work related works have been influenced by \cite{hinton2011transforming} on Transformed Auto-encoder models,
-in which pose is explicitly separated from content in an autoencoder which is trained to predict (known)
-small transformations of an image 
+Many of these  related works have been influenced by the Transforming Auto-encoder models by \cite{hinton2011transforming},
+in which pose is explicitly separated from content in an auto-encoder which is trained to predict (known)
+small transformations of an image.
 More recently,  \cite{dosovitskiy2014learning} introduced a convolutional network to generate images of chairs where pose was explicitly separated out, and \cite{cheung2014discovering} introduced an auto-encoder where a subset of variables such as pose can be explicitly observed and remaining
 variables are encouraged to explain orthogonal factors of variation.   
 Most relevant in this line of works is that of~\cite{kulkarni2015deep}, which, like us, 
 separate the content of an image from pose parameters using a variational auto-encoder.
 In all of these works, however, there is an element of supervision, where variables such as pose
 and lighting are known at training time. 
-%To achieve this separation, however, they train 
-%rely on a custom training procedure in whic.
 Our method in contrast is able to separate pose from content in an fully unsupervised setting 
 using standard off-the-shelf minibatch gradient methods.
 
@@ -79,7 +59,9 @@ annotations.
 training set of manually segmented regions.
 Our model also has similarities to that of \cite{le2011learning}, however  they use restricted Boltzmann machines, 
 which require expensive MCMC sampling to estimate gradients and have difficulties reliably estimating the 
-log-partition function.  %ur model¯
+log-partition function.  
+\vspace{-2mm}
+%ur model¯
 %falls under the category of variational autoencoders which do not require expensive MCMC sampling.	
 	
 %Amodal completion, where one must ``complete'' a partially visible object, is a challenging vision task

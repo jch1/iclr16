@@ -1,25 +1,57 @@
 \label{sec:eval}
+\vspace{-2mm}
+
+In all of our experiments we use the same training settings used in~\cite{Kingma2014}; that is,  
+we use Adagrad for optimization with minibatches of 100  with a learning rate of 0.01
+and a weight decay corresponding to a prior of $\mathcal{N}(0,1)$.
+We initialize weights in our network using the heuristic of ~\cite{glorot2010understanding}.
+However for the pose recognition modules in the ST-VAE model, we have found it useful to
+specifically initialize biases so that poses are initially close to the identity transformation (see~\cite{jaderberg2015spatial}).
+
+We use vanilla VAE models  as a baseline model against first the (single image layer) ST-VAE
+model, then the more general CST-VAE model.  In all of our comparison we fix the training time for all models.
+We experiment with between 20 and 50  dimensions for the latent content variables $z^C$
+and always use 6 dimensions for pose variables $z^T$.
+We parameterize content encoders and decoders
+by using a two layer fully connected MLP with 256 dimensional
+hidden layers and ReLU nonlinearities.
+For pose decoders and encoders we also use two layer fully connected MLPs, but 
+using 32 dimensional hidden layers and Tanh nonlinearities.
+%\footnote{
+%
+%We have found this choice of Tanh vs. ReLU makes a significant
+%difference in practice.
+%\kevin{Why?}
+%}
+Finally for spatial transformer modules, we always resample onto a grid that is the same size as the original
+image.
+
+
+%\Jon{For binary images, it is common to have a sigmoid at the end of the VAE decoder.
+%However we have found that it is often more numerically stable in these situations to first apple the spatial transformation, then
+%to apply the sigmoid after the transformation.
+%}
 
 \begin{figure}[t]
 \begin{center}
 \subfigure[]{
-\raisebox{3mm}{
-\includegraphics[width=0.45\linewidth]{figs/vae_stvae_samples.pdf}
+\raisebox{2mm}{
+\includegraphics[width=0.48\linewidth]{figs/vae_stvae_samples.pdf}
 \label{fig:vae_stvae_samples}
 }
 }
-\qquad
+\,
 \subfigure[]{
 \includegraphics[width=0.45\linewidth]{figs/stvae_averageddigits.pdf}
 \label{fig:stvae_averageddigits}
-}\vspace{-3mm}
+}\vspace{-5mm}
 \end{center}
  \caption{\footnotesize
  \subref{fig:vae_stvae_samples} Comparison of samples from the VAE and ST-VAE generative models.  
  For the ST-VAE model, we show both the sample in its canonical pose and the final generated image.
   \subref{fig:stvae_averageddigits}  Averaged images from each MNIST class as learning progresses ---
   we typically see pose variables converge very quickly.
- }
+ }\vspace{-2mm}
 \end{figure}
 
 
@@ -53,7 +85,7 @@ Directly supervised & 0.999 & 0.96   \\
 \end{tabular}%
 }
 \label{fig:vae_stvae_classification}
-}\vspace{-3mm}
+}\vspace{-4mm}
 \end{center}
  \caption{\footnotesize
  \subref{fig:vae_stvae_learning_curves} Train and test (per-example) lower bounds on log-likelihood 
@@ -62,39 +94,8 @@ for the vanilla VAE and ST-VAE models on the Translated MNIST data;
  from VAE and ST-VAE models.  More details in text.
  }
 \end{figure}
-
-
-In all of our experiments we use the same training settings used in~\cite{Kingma2014}; that is,  
-we use Adagrad for optimization with minibatches of 100  with a learning rate of 0.01
-and a weight decay corresponding to a prior of $\mathcal{N}(0,1)$.
-We initialize weights in our network using the heuristic of ~\cite{glorot2010understanding}.
-However for the pose recognition modules in the ST-VAE model, we have found it useful to
-specifically initialize biases so that poses are initially close to the identity transformation (see~\cite{jaderberg2015spatial}).
-
-We use vanilla VAE models  as a baseline model against first the (single image layer) ST-VAE
-model, then the more general CST-VAE model.
-We experiment with between 20 and 50  dimensions for the latent content variables $z^C$
-and always use 6 dimensions for pose variables $z^T$.
-We parameterize content encoders and decoders
-by using a two layer fully connected MLP with 256 dimensional
-hidden layers and ReLU nonlinearities.
-For pose decoders and encoders we also use two layer fully connected MLPs, but 
-using 32 dimensional hidden layers and Tanh nonlinearities.\footnote{
-%
-We have found this choice of Tanh vs. ReLU makes a significant
-difference in practice.
-\kevin{Why?}
-}
-Finally for spatial transformer modules, we always resample onto a grid that is the same size as the original
-image.
-
-
-\Jon{For binary images, it is common to have a sigmoid at the end of the VAE decoder.
-However we have found that it is often more numerically stable in these situations to first apple the spatial transformation, then
-to apply the sigmoid after the transformation.
-}
-
-\subsection{Evaluating the Spatially transformed Variational Autoencoder alone}
+\vspace{-2mm}
+\subsection{Evaluating the Spatially transformed Variational Autoencoder alone}\vspace{-2mm}
 
 We first evaluate our ST-VAE (single layer) model alone on the MNIST dataset~\citep{lecun1998gradient}
 and a derived dataset, \emph{TranslatedMNIST}, in which we randomly translated each  $28\times 28$ MNIST example
@@ -103,22 +104,23 @@ Figure~\ref{fig:vae_stvae_learning_curves} plots train and test log-likelihoods 
 comparing the vanilla VAE model against the ST-VAE model, where we see that from the beginning the ST-VAE
 model is able to achieve a much better likelihood while not overfitting.  This can also be seen in Figure~\ref{fig:vae_stvae_samples}
 which visualizes samples from both generative models.   We see that while the VAE model (top row) manages to 
-generate place randomly transformed blobs on the image, these blobs typically only look somewhat like digits. 
-For the ST-VAE model, we plot both the final samples (middle row) as well as the intermediate canonical images, 
+generate randomly transformed blobs on the image, these blobs typically only look somewhat like digits. 
+For the ST-VAE model, we plot both the final samples (middle row) as well as the intermediate canonical images (last row), 
 which typically are visually closer to MNIST digits. 
 
 Interestingly, the canonical images tend to be slightly smaller versions
-of the digits and our model relies on the Spatial Transformer Networks to scale them up at the end of the generative process,
-though we have not investigated why this behavior is encouraged by the network.  We also observe (Figure~\ref{fig:stvae_averageddigits})
+of the digits and our model relies on the Spatial Transformer Networks to scale them up at the end of the generative process.
+Though we have performed a careful investigation, reasons for this effect may be a combination of the fact (1) that scaling up the images introduces some blur which accounts for small variations in  nearby pixels and (2) it  is easier to encode smaller digits than larger ones.
+ We also observe (Figure~\ref{fig:stvae_averageddigits})
 that the pose network when trained on our dataset tends to converge rapidly, bringing digits to a centered canonical pose
 within tens of gradient updates. 
-Once the digits have been aligned, the content networks is able to make better progress.
+Once the digits have been aligned, the content network is able to make better progress.
 
 Finally we evaluate the latent content codes $z^C$ learned by our ST-VAE model 
 in digit classification using the standard MNIST train/test split.  For this experiment
 we use a simple two layer MLP with 32 hidden units in each layer and
 ReLU nonlinearities
-applied to the posterior mean of $z^C$ inferrred from each image; we
+applied to the posterior mean of $z^C$ inferred from each image; we
 do not use the labels to fine tune the VAE.
 Figure~\ref{fig:vae_stvae_classification} summarizes the results of the experiment, where we
 compare against three baseline classifiers: (1) an MLP learned on latent codes from the VAE model,
@@ -131,17 +133,15 @@ to be competitive with the ~\cite{jaderberg2015spatial} approach (both of which 
 that can be obtained with this MLP training directly on the original MNIST set).  The approaches that do not account for
 pose variation do much worse than ST-VAE on this task and exhibit significant overfitting.
 
-
+\vspace{-2mm}
 \subsection{Evaluating the CST Variational Autoencoder}
-
-
-
+\vspace{-2mm}
 
 \begin{figure}[t]
 \begin{center}
 \subfigure[]{
 \raisebox{7mm}{
-\includegraphics[width=0.35\linewidth]{figs/cstvae_learning_curves.pdf}
+\includegraphics[width=0.35\linewidth]{figs/cstvae_learning_curves2.pdf}
 \label{fig:cstvae_learning_curves}
 }
 }\;
@@ -165,7 +165,7 @@ for the vanilla VAE and CST-VAE models on the Superimposed MNIST data;
  \subref{fig:cstvae_reconstructions}  Images from the Superimposed MNIST dataset with visualizations of
  intermediate variables in the neural network corresponding to first and second layers and the final reconstruction.
  Chance performance on this task is 0.018 (1.8\% accuracy) since we require that the image recover both digits correctly
- within an image; }
+ within an image.}
 \end{figure}
 
 
@@ -192,9 +192,14 @@ using two layers (which can be thought of as foreground and background).
 
 Figure~\ref{fig:cstvae_learning_curves}
 plots train and test log-likelihoods over 250000 gradient steps
-comparing the vanilla VAE model against the CST-VAE model, where again
-we see that from the beginning the ST-VAE
-model is able to achieve a much better solution. 
+comparing the vanilla VAE model against the ST-VAE and CST-VAE model, where 
+we see that from the beginning the CST-VAE
+model is able to achieve a much better solution than the ST-VAE model which in turn outperforms the VAE model.  
+To control the number of latent dimensions across models in this experiment,
+we allow the VAE and ST-VAE models to use 50 latent dimensions for content.
+The ST-VAE model uses an additional 6 dimensions for the latent pose. For the CST-VAE model we use 20 latent content dimensions
+and 6 latent pose dimensions per layer (for a total of 52 latent dimensions). 
+
 
 Figure~\ref{fig:cstvae_reconstructions} highlights the interpretability of our model.
 On the left column, we show example superimposed digits from our dataset and ask the 
@@ -208,17 +213,20 @@ often corresponding to the correct digits that were used to generate the observa
  of the input image.
 
 Finally, we evaluate our performance on a classification task.
-Here we use the same two layer MLP architecture \Jon{hidden layer dim} as we did with the ST-VAE model, and train using latent representations
-learned by the CST-VAE model.  Specifically we concatenate the latent content vectors $z^C_1$ and $z^C_2$
-which are fed as input to the classifier network.  \Jon{dimensions of latent variables}
+Here we use the same two layer MLP architecture (with 256 hidden layer units) as we did 
+with the ST-VAE model, and train using latent representations
+learned by the CST-VAE model.  
+Specifically we concatenate the latent content vectors $z^C_1$ and $z^C_2$
+which are fed as input to the classifier network.  
 As baselines we compare against (1) the vanilla VAE latent representations 
 and (2) a classifier trained directly on images of superimposed digits.  We report accuracy, requiring that the classifier
 be correct on both digits within an image to be correct.  
 Figure~\ref{fig:cstvae_classification} visualizes the results.  We see that the classifier that is trained directly
-on pixels exhibits severe overfitting and performs the worst.  Both variational auto-encoder models also
-slightly overfit, but perform better, with the CST-VAE obtaining approximately twice the accuracy as the VAE model.
+on pixels exhibits severe overfitting and performs the worst.  The three variational auto-encoder models also
+slightly overfit, but perform better, with the CST-VAE obtaining the best results, with almost twice the accuracy as the vanilla
+VAE model.
 
-
+\vspace{-2mm}
 %Show reconstruction results on MNIST and samples from a single STAEVB module within the network
 
 
@@ -227,9 +235,6 @@ slightly overfit, but perform better, with the CST-VAE obtaining approximately t
 %compare accuracy on something
 
 %\subsection{With Textures???}
-
-
-
 
 
 
