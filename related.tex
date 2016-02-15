@@ -59,15 +59,17 @@ To our knowledge, we are the first to apply this module in an unsupervised learn
 \subsection{Layered models of images}\vspace{-2mm}
 
 Layer models of images is an old idea.
-Most works 
-take advantage of motion cues to decompose video data into layers~\citep{wang1994representing,ayer1995layered,kannan2005generative}.
+Most works take advantage of motion cues to decompose video data into layers~\citep{darrell1991robust,wang1994representing,ayer1995layered,kannan2005generative,kannan2008fast}.
 However, there have been some papers that work from single images.
 \cite{yang2012layered}, for example, propose a layered model for
 segmentation but rely heavily on bounding box and categorical
 annotations.	
 \cite{Isola2013} deconstruct a single image into layers, but require a
 training set of manually segmented regions.
-Our model also has similarities to that of \cite{le2011learning}, however  they use restricted Boltzmann machines, 
+Our generative model is similar to that proposed by \cite{williams2004greedy}, however we can capture more complex
+appearance models by using deep neural networks, compared to their per-pixel mixture-of-gaussian models.  Moreover,
+our training procedure is simpler since it is just end-to-end minibatch SGD.
+Our approach also has similarities to the work of \cite{le2011learning}, however  they use restricted Boltzmann machines, 
 which require expensive MCMC sampling to estimate gradients and have difficulties reliably estimating the 
 log-partition function.  
 \vspace{-2mm}
